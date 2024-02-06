@@ -1,6 +1,4 @@
-
 use crate::road_item::{DynamicRoadItem, RoadItem, Point};
-use crate::utils::Constants;
 
 pub struct TrafficLight {
     base: DynamicRoadItem,
