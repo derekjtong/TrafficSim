@@ -2,6 +2,7 @@ use crate::road_item::RoadItem;
 
 pub struct Road {
     road_items: Vec<Box<dyn RoadItem>>,
+    // TODO: add road parameters
 }
 
 impl Road {

@@ -4,12 +4,14 @@ mod road_items_dynamic;
 mod utils;
 mod car;
 mod truck;
+mod gui;
+mod map;
+// if these are removed, must change imports in those files to use trafficsim::road, etc.
 
-use road::Road;
-use road_item::{DynamicRoadItem, StaticRoadItem};
 use road_items_dynamic::Vehicle;
 use car::Car;
 use truck::Truck;
+use gui::Gui;
 use utils::Constants;
 
 
@@ -56,4 +58,13 @@ fn main() {
         }
     }
 
+    println!("Start up complete! Starting GUI...");
+
+    let mut gui = Gui::new();
+
+    gui.add_road_through_gui();
+    gui.display_map();
+
+    gui.remove_road_through_gui(0);
+    gui.display_map();
 }

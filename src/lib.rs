@@ -1,5 +1,5 @@
 pub mod simulation;
-pub use simulation::Simulation;
+pub use simulation::*;
 
 pub mod road;
 pub use road::*;
@@ -21,6 +21,9 @@ pub use car::*;
 
 pub mod truck;
 pub use truck::*;
+
+pub mod gui;
+pub use gui::*;
 
 pub mod map;
 pub use map::*;

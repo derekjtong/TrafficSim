@@ -1,5 +1,4 @@
-use crate::road::Road; // Import the Road struct from its module
-
+use crate::road::Road;
 pub struct Map {
     roads: Vec<Road>,
 }
