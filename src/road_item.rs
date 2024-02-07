@@ -8,6 +8,7 @@ pub trait RoadItem {
     fn set_pos(&mut self, pos: Point);
     fn pos(&self) -> Point;
     fn type_name(&self) -> &'static str;
+    // TODO: add update here
 }
 
 pub struct StaticRoadItem {
