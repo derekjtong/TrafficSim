@@ -1,4 +1,4 @@
-use crate::map::Map; 
+use crate::{map::Map, road::Road};
 
 // TODO: decide on gui library
 pub struct Gui {
@@ -11,7 +11,7 @@ impl Gui {
     }
 
     pub fn add_road_through_gui(&mut self /*, road_parameters: ... */) {
-        // self.map.add_road(Road::new(/* road parameters */));
+        self.map.add_road(Road::new());
         // TODO: imeplement road parameters in road.rs
         println!("Placeholder: A road has been added.");
     }
@@ -24,6 +24,6 @@ impl Gui {
     pub fn display_map(&self) {
         // TODO: placeholder for actual GUI display logic.
         println!("Placeholder: Displaying map with {} roads.", self.map.get_roads().len());
-        println!("Total road items on the map: {}", self.map.total_road_items());
+        println!("             Total road items on the map: {}", self.map.total_road_items());
     }
 }
