@@ -21,3 +21,6 @@ pub use car::*;
 
 pub mod truck;
 pub use truck::*;
+
+pub mod map;
+pub use map::*;
