@@ -6,7 +6,7 @@ mod car;
 mod truck;
 mod gui;
 mod map;
-// if these are removed, must change imports in those files to use trafficsim::road, etc.
+// if these are removed, change imports in definition files to use trafficsim::road, etc.
 
 use road_items_dynamic::Vehicle;
 use car::Car;
@@ -16,7 +16,8 @@ use utils::Constants;
 
 
 fn main() {
-    // Old testing code
+    // Example usage
+    // TODO: remove
     // let mut road = Road::new();
 
     // // Create road items on heap and add to road
@@ -37,6 +38,8 @@ fn main() {
     //     println!("Road item type: {:?}, position: {:?}", item.type_name(), item.pos());
     // }
 
+    // Update Speed
+    // TODO: move to testing
     let mut car = Car::new(0.0, 0.0, "Tesla Model S".to_string(), 0.0 / Constants::MPS_TO_MPH, 0.0, 0.0);
     car.set_desired_speed(65.0 / Constants::MPS_TO_MPH); // Convert mph to m/s
 
@@ -58,6 +61,7 @@ fn main() {
         }
     }
 
+    // Actual start
     println!("Start up complete! Starting GUI...");
 
     let mut gui = Gui::new();
