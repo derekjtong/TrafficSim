@@ -40,14 +40,14 @@ fn main() {
 
     // Update Speed
     // TODO: move to testing
-    let mut car = Car::new(0.0, 0.0, "Tesla Model S".to_string(), 0.0 / Constants::MPS_TO_MPH, 0.0, 0.0);
-    car.set_desired_speed(65.0 / Constants::MPS_TO_MPH); // Convert mph to m/s
+    let mut car = Car::new(0.0, 0.0, "Toyota Camry".to_string(), 0.0 / Constants::MPS_TO_MPH, 0.0, 0.0);
+    car.set_desired_speed(65.0 / Constants::MPS_TO_MPH);
 
     let mut truck1 = Truck::new(0.0, 0.0, "Ford F-150".to_string(), 0.0 / Constants::MPS_TO_MPH, 0.0, 0.0, 4.0);
-    truck1.set_desired_speed(55.0 / Constants::MPS_TO_MPH); // Convert mph to m/s
+    truck1.set_desired_speed(55.0 / Constants::MPS_TO_MPH);
 
-    let mut truck2 = Truck::new(0.0, 0.0, "Ford F-150".to_string(), 0.0 / Constants::MPS_TO_MPH, 0.0, 0.0, 8.0);
-    truck2.set_desired_speed(50.0 / Constants::MPS_TO_MPH); // Convert mph to m/s
+    let mut truck2 = Truck::new(0.0, 0.0, "Volvo VNL 760".to_string(), 0.0 / Constants::MPS_TO_MPH, 0.0, 0.0, 8.0);
+    truck2.set_desired_speed(50.0 / Constants::MPS_TO_MPH);
 
     let mut vehicles: Vec<Box<dyn Vehicle>> = Vec::new();
     vehicles.push(Box::new(car));
