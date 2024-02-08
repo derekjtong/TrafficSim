@@ -18,7 +18,9 @@ pub struct StaticRoadItem {
 impl StaticRoadItem {
     // Constructor method for StaticRoadItem
     pub fn new(x: f64, y: f64) -> Self {
-        Self { pos: Point { x, y } }
+        Self {
+            pos: Point { x, y },
+        }
     }
 }
 
@@ -44,7 +46,9 @@ pub struct DynamicRoadItem {
 impl DynamicRoadItem {
     // Constructor method for DynamicRoadItem
     pub fn new(x: f64, y: f64) -> Self {
-        Self { pos: Point { x, y } }
+        Self {
+            pos: Point { x, y },
+        }
     }
 
     pub fn move_by(&mut self, dx: f64, dy: f64) {
