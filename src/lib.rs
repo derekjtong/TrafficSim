@@ -27,3 +27,6 @@ pub use gui::*;
 
 pub mod map;
 pub use map::*;
+
+mod output;
+pub use output::{SimOutput, ImperialOutput, MetricOutput};

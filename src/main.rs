@@ -13,6 +13,7 @@ use car::Car;
 use truck::Truck;
 use gui::Gui;
 use utils::Constants;
+use trafficsim::{SimOutput, ImperialOutput, MetricOutput};
 
 
 fn main() {
@@ -51,10 +52,21 @@ fn main() {
     vehicles.push(Box::new(truck1));
     vehicles.push(Box::new(truck2));
 
+    let sim_output: Box<dyn SimOutput> = if use_metric_system() {
+        Box::new(MetricOutput)
+    } else {
+        Box::new(ImperialOutput)
+    };
+
     for _ in 0..11 {
         for vehicle in vehicles.iter_mut() {
             vehicle.update_speed(1);
-            println!("{} speed: {:.2} mph", vehicle.type_name(), vehicle.get_current_speed() * Constants::MPS_TO_MPH);
+            println!(
+                "{} speed: {:.2} {}",
+                vehicle.type_name(),
+                sim_output.get_speed(vehicle.get_current_speed()),
+                if use_metric_system() { "km/h" } else { "mph" }
+            );
         }
     }
 
@@ -67,4 +79,9 @@ fn main() {
 
     gui.remove_road_through_gui(0);
     gui.display_map();
+}
+
+// Dummy function to simulate user input
+fn use_metric_system() -> bool {
+    true
 }
