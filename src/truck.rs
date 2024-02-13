@@ -1,4 +1,8 @@
-use crate::{road_item::{DynamicRoadItem, Point, RoadItem}, road_items_dynamic::Vehicle, utils::Constants};
+use crate::{
+    road_item::{DynamicRoadItem, Point, RoadItem},
+    road_items_dynamic::Vehicle,
+    utils::Constants,
+};
 
 // TODO: consolidate into folder
 
@@ -12,7 +16,15 @@ pub struct Truck {
 }
 
 impl Truck {
-    pub fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64, load_weight: f64) -> Self {
+    pub fn new(
+        x: f64,
+        y: f64,
+        model: String,
+        speed: f64,
+        direction: f64,
+        desired_speed: f64,
+        load_weight: f64,
+    ) -> Self {
         Self {
             base: DynamicRoadItem::new(x, y),
             model,
@@ -23,7 +35,6 @@ impl Truck {
         }
     }
 }
-
 
 impl RoadItem for Truck {
     fn set_pos(&mut self, pos: Point) {
@@ -40,7 +51,10 @@ impl RoadItem for Truck {
 }
 
 impl Vehicle for Truck {
-    fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self where Self: Sized {
+    fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self
+    where
+        Self: Sized,
+    {
         Self::new(x, y, model, speed, direction, desired_speed, 0.0) // Default load_weight to 0.0
     }
 

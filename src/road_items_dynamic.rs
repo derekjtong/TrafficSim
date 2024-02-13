@@ -1,4 +1,4 @@
-use crate::road_item::{DynamicRoadItem, RoadItem, Point};
+use crate::road_item::{DynamicRoadItem, Point, RoadItem};
 
 pub struct TrafficLight {
     base: DynamicRoadItem,
@@ -41,7 +41,9 @@ impl RoadItem for TrafficLight {
 }
 
 pub trait Vehicle: RoadItem {
-    fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self where Self: Sized;
+    fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self
+    where
+        Self: Sized;
     fn model(&self) -> &String;
     fn set_desired_speed(&mut self, mph: f64);
     fn get_current_speed(&self) -> f64;

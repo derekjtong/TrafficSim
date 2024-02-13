@@ -1,4 +1,4 @@
-use crate::road_item::{StaticRoadItem, Point};
+use crate::road_item::{Point, StaticRoadItem};
 
 // TODO: add RoadItem traits
 
@@ -16,7 +16,7 @@ pub struct SpeedLimitSign {
 }
 
 impl SpeedLimitSign {
-    pub fn new(x: f64, y: f64,speed_limit: i32) -> Self {
+    pub fn new(x: f64, y: f64, speed_limit: i32) -> Self {
         Self {
             base: StaticRoadItem::new(x, y),
             speed_limit,

@@ -25,6 +25,9 @@ impl Map {
     }
 
     pub fn total_road_items(&self) -> usize {
-        self.roads.iter().map(|road| road.get_road_items().len()).sum()
+        self.roads
+            .iter()
+            .map(|road| road.get_road_items().len())
+            .sum()
     }
 }

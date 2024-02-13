@@ -1,4 +1,8 @@
-use crate::{road_item::{DynamicRoadItem, Point, RoadItem}, road_items_dynamic::Vehicle, utils::Constants};
+use crate::{
+    road_item::{DynamicRoadItem, Point, RoadItem},
+    road_items_dynamic::Vehicle,
+    utils::Constants,
+};
 
 // TODO: consolidate into folder
 
@@ -10,10 +14,16 @@ pub struct Car {
     desired_speed: f64,
 }
 
-
 // Car-specific implementations
 impl Car {
-    pub fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self {
+    pub fn new(
+        x: f64,
+        y: f64,
+        model: String,
+        speed: f64,
+        direction: f64,
+        desired_speed: f64,
+    ) -> Self {
         Self {
             base: DynamicRoadItem::new(x, y),
             model,
@@ -39,7 +49,10 @@ impl RoadItem for Car {
 }
 
 impl Vehicle for Car {
-    fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self where Self: Sized {
+    fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self
+    where
+        Self: Sized,
+    {
         Self::new(x, y, model, speed, direction, desired_speed)
     }
 
