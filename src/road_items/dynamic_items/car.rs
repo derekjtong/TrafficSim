@@ -1,5 +1,3 @@
-// TODO: consolidate into folder
-
 use crate::{
     road_items::{DynamicRoadItem, Point, RoadItem},
     Constants,
