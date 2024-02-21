@@ -1,6 +1,5 @@
 use std::io::{self, Write};
 use trafficsim::Car;
-use trafficsim::Constants;
 use trafficsim::Truck;
 use trafficsim::Vehicle;
 use trafficsim::{ImperialGUI, MetricGUI, GUI};
@@ -45,8 +44,6 @@ fn main() {
 }
 
 fn example(gui: &mut Box<dyn GUI>, speed_limit: f64) {
-    // Update Speed
-    // TODO: move to testing
     let mut car: Box<dyn Vehicle> = Box::new(Car::new(
         0.0,
         0.0,
@@ -55,30 +52,30 @@ fn example(gui: &mut Box<dyn GUI>, speed_limit: f64) {
         0.0,
         0.0,
     ));
-    gui.set_desired_speed(&mut car, speed_limit);
-
     let mut truck1: Box<dyn Vehicle> = Box::new(Truck::new(
         0.0,
         0.0,
         "Ford F-150".to_string(),
-        0.0 / Constants::MPS_TO_MPH,
+        0.0,
         0.0,
         0.0,
         4.0,
     ));
-    gui.set_desired_speed(&mut truck1, speed_limit);
-
     let mut truck2: Box<dyn Vehicle> = Box::new(Truck::new(
         0.0,
         0.0,
         "Volvo VNL 760".to_string(),
-        0.0 / Constants::MPS_TO_MPH,
+        0.0,
         0.0,
         0.0,
         8.0,
     ));
-    gui.set_desired_speed(&mut truck2, speed_limit);
 
+    gui.set_speed_limit(&mut car, speed_limit);
+    gui.set_speed_limit(&mut truck1, speed_limit);
+    gui.set_speed_limit(&mut truck2, speed_limit);
+
+    // TODO: Change to dyanmic road items
     let mut vehicles: Vec<Box<dyn Vehicle>> = Vec::new();
     vehicles.push(car);
     vehicles.push(truck1);
@@ -87,11 +84,7 @@ fn example(gui: &mut Box<dyn GUI>, speed_limit: f64) {
     for _ in 0..11 {
         for vehicle in vehicles.iter_mut() {
             vehicle.update_speed(1);
-            println!(
-                "{} speed: {}",
-                vehicle.type_name(),
-                gui.display_speed(vehicle)
-            );
+            println!("{} speed: {}", vehicle.type_name(), gui.get_speed(vehicle));
         }
     }
 }
