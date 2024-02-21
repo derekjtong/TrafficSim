@@ -8,7 +8,7 @@ pub trait GUI: ISimOutput + ISimInput {
     fn add_road_through_gui(&mut self);
     fn remove_road_through_gui(&mut self, index: usize);
     fn display_map(&self);
-    // Moved to ISimOutput/ISimInput
+    // Moved to ISimOutput/ISimInput in interface.rs
     // fn get_speed(&self, v: &mut Box<dyn Vehicle>) -> String;
     // fn set_speed_limit(&mut self, v: &mut Box<dyn Vehicle>, speed: f64);
 }
