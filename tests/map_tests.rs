@@ -1,7 +1,7 @@
 use trafficsim::*;
 
 #[cfg(test)]
-mod map_integration_tests {
+mod map_integration {
     use trafficsim::road_items::{Point, RoadItem};
 
     use crate::map::Map;
