@@ -1,7 +1,7 @@
 pub mod dynamic_items;
 pub mod static_items;
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Point {
     pub x: f64,
     pub y: f64,
