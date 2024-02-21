@@ -1,4 +1,6 @@
-use crate::road_items::{DynamicRoadItem, Point, RoadItem};
+use crate::road_items::{Point, RoadItem};
+
+use super::DynamicRoadItem;
 
 pub struct TrafficLight {
     is_green: bool,
