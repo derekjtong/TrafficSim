@@ -1,5 +1,7 @@
 use crate::road_items::{Point, RoadItem};
 
+use super::StaticRoadItem;
+
 pub struct SpeedLimitSign {
     pos: Point,
     speed_limit: i8,
@@ -34,3 +36,5 @@ impl RoadItem for SpeedLimitSign {
         "SpeedLimitSign"
     }
 }
+
+impl StaticRoadItem for SpeedLimitSign {}

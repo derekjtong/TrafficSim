@@ -1,5 +1,7 @@
 use crate::road_items::{Point, RoadItem};
 
+use super::StaticRoadItem;
+
 pub struct Intersection {
     pos: Point,
 }
@@ -23,3 +25,5 @@ impl RoadItem for Intersection {
         "Intersection"
     }
 }
+
+impl StaticRoadItem for Intersection {}

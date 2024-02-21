@@ -1,4 +1,6 @@
 use crate::road_items::{Point, RoadItem};
+
+use super::StaticRoadItem;
 pub struct StopSign {
     pos: Point,
 }
@@ -24,3 +26,5 @@ impl RoadItem for StopSign {
         "StopSign"
     }
 }
+
+impl StaticRoadItem for StopSign {}

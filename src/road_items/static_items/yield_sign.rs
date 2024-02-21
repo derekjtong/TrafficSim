@@ -1,4 +1,6 @@
 use crate::road_items::{Point, RoadItem};
+
+use super::StaticRoadItem;
 pub struct YieldSign {
     pos: Point,
 }
@@ -24,3 +26,5 @@ impl RoadItem for YieldSign {
         "YieldSign"
     }
 }
+
+impl StaticRoadItem for YieldSign {}
