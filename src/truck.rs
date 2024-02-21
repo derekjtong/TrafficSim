@@ -20,7 +20,7 @@ impl Truck {
         x: f64,
         y: f64,
         model: String,
-        speed: f64,
+        speed: f64, // mph
         direction: f64,
         desired_speed: f64,
         load_weight: f64,
