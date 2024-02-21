@@ -1,4 +1,7 @@
-use trafficsim::*;
+use trafficsim::{
+    road_items::{dynamic_items::car::Car, StaticRoadItem},
+    Simulation,
+};
 
 #[test]
 fn test_simulation_with_multiple_road_items() {
@@ -21,6 +24,5 @@ fn test_simulation_with_multiple_road_items() {
     let road_items = simulation.get_road_items();
 
     // Simple check to ensure items exist
-    assert!(!road_items.is_empty()); 
+    assert!(!road_items.is_empty());
 }
-

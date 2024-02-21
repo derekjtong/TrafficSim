@@ -1,8 +1,8 @@
 use std::io::{self, Write};
-use trafficsim::Car;
-use trafficsim::Truck;
-use trafficsim::Vehicle;
-use trafficsim::{ImperialGUI, MetricGUI, GUI};
+use trafficsim::{
+    road_items::dynamic_items::{car::Car, road_items_dynamic::Vehicle, truck::Truck},
+    ImperialGUI, MetricGUI, GUI,
+};
 
 fn main() {
     let mut input = String::new();

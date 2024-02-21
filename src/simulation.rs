@@ -1,4 +1,4 @@
-use crate::road_item::RoadItem;
+use crate::road_items::RoadItem;
 
 pub struct Simulation {
     // TODO: one array for everything or a separate array for each type of road item?

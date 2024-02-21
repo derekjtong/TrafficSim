@@ -1,4 +1,4 @@
-use crate::road_item::RoadItem;
+use crate::road_items::RoadItem;
 
 pub struct Road {
     road_items: Vec<Box<dyn RoadItem>>,

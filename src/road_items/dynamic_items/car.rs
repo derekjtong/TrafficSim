@@ -1,8 +1,11 @@
-use crate::road_item::{DynamicRoadItem, Point, RoadItem};
-use crate::road_items_dynamic::Vehicle;
-use crate::utils::Constants;
-
 // TODO: consolidate into folder
+
+use crate::{
+    road_items::{DynamicRoadItem, Point, RoadItem},
+    Constants,
+};
+
+use super::road_items_dynamic::Vehicle;
 
 pub struct Car {
     base: DynamicRoadItem,

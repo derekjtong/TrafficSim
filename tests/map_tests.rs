@@ -2,16 +2,17 @@ use trafficsim::*;
 
 #[cfg(test)]
 mod map_integration_tests {
+    use trafficsim::road_items::{Point, RoadItem};
+
     use crate::map::Map;
     use crate::road::Road;
-    use crate::road_item::RoadItem;
 
     // Dummy RoadItem for testing purposes
     struct TestItem;
     impl RoadItem for TestItem {
-        fn set_pos(&mut self, _pos: crate::road_item::Point) {}
-        fn pos(&self) -> crate::road_item::Point {
-            crate::road_item::Point { x: 0.0, y: 0.0 }
+        fn set_pos(&mut self, _pos: Point) {}
+        fn pos(&self) -> Point {
+            Point { x: 0.0, y: 0.0 }
         }
         fn type_name(&self) -> &'static str {
             "TestItem"

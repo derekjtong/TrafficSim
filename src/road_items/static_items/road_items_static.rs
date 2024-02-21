@@ -1,6 +1,6 @@
-use crate::road_item::{Point, StaticRoadItem};
-
 // TODO: add RoadItem traits
+
+use crate::road_items::StaticRoadItem;
 
 pub struct StopSign {
     base: StaticRoadItem,

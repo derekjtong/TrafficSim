@@ -1,8 +1,9 @@
 use crate::{
-    road_item::{DynamicRoadItem, Point, RoadItem},
-    road_items_dynamic::Vehicle,
+    road_items::{DynamicRoadItem, Point, RoadItem},
     utils::Constants,
 };
+
+use super::road_items_dynamic::Vehicle;
 
 // TODO: consolidate into folder
 
