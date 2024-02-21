@@ -1,21 +1,9 @@
-mod road;
-mod road_item;
-mod road_items_dynamic;
-mod utils;
-mod car;
-mod truck;
-mod gui;
-mod map;
-// if these are removed, change imports in definition files to use trafficsim::road, etc.
-
-use road_items_dynamic::Vehicle;
-use car::Car;
-use truck::Truck;
-use gui::Gui;
-use utils::Constants;
-use trafficsim::{SimOutput, ImperialOutput, MetricOutput};
-use std::io::{self, Write}; // Write is for flush()
-
+use std::io::{self, Write};
+use trafficsim::Car;
+use trafficsim::Constants;
+use trafficsim::Truck;
+use trafficsim::Vehicle;
+use trafficsim::{ImperialGUI, MetricGUI, GUI};
 
 fn main() {
     let mut input = String::new();
@@ -23,25 +11,26 @@ fn main() {
     // Get user input for metric or imperial
     print!("Enter 'M' for metric or 'I' for Imperial: ");
     io::stdout().flush().expect("Failed to flush stdout"); // Need to flush because print! doesn't automatically flush
-    io::stdin().read_line(&mut input).expect("Failed to read line");
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read line");
 
-    let sim_output: Box<dyn SimOutput> = if input.trim().to_uppercase() == "M" {
-        Box::new(MetricOutput)
+    let mut gui: Box<dyn GUI> = if input.trim().to_uppercase() == "M" {
+        Box::new(MetricGUI::new())
     } else {
-        Box::new(ImperialOutput)
+        Box::new(ImperialGUI::new())
     };
     input.clear();
 
     // Get user input for speed limit
     print!("Enter speed limit: ");
     io::stdout().flush().expect("Failed to flush stdout"); // Need to flush because print! doesn't automatically flush
-    io::stdin().read_line(&mut input).expect("Failed to read line");
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read line");
 
     // Run example program
-    example(sim_output);
-
-    // Run GUI example
-    // let mut gui = Gui::new();
+    example(gui);
 
     // gui.add_road_through_gui();
     // gui.display_map();
@@ -50,16 +39,39 @@ fn main() {
     // gui.display_map();
 }
 
-fn example(sim_output: Box<dyn SimOutput>) {
+fn example(gui: Box<dyn GUI>) {
     // Update Speed
     // TODO: move to testing
-    let mut car = Car::new(0.0, 0.0, "Toyota Camry".to_string(), 0.0 / Constants::MPS_TO_MPH, 0.0, 0.0);
+    let mut car = Car::new(
+        0.0,
+        0.0,
+        "Toyota Camry".to_string(),
+        0.0 / Constants::MPS_TO_MPH,
+        0.0,
+        0.0,
+    );
     car.set_desired_speed(65.0 / Constants::MPS_TO_MPH);
 
-    let mut truck1 = Truck::new(0.0, 0.0, "Ford F-150".to_string(), 0.0 / Constants::MPS_TO_MPH, 0.0, 0.0, 4.0);
+    let mut truck1 = Truck::new(
+        0.0,
+        0.0,
+        "Ford F-150".to_string(),
+        0.0 / Constants::MPS_TO_MPH,
+        0.0,
+        0.0,
+        4.0,
+    );
     truck1.set_desired_speed(55.0 / Constants::MPS_TO_MPH);
 
-    let mut truck2 = Truck::new(0.0, 0.0, "Volvo VNL 760".to_string(), 0.0 / Constants::MPS_TO_MPH, 0.0, 0.0, 8.0);
+    let mut truck2 = Truck::new(
+        0.0,
+        0.0,
+        "Volvo VNL 760".to_string(),
+        0.0 / Constants::MPS_TO_MPH,
+        0.0,
+        0.0,
+        8.0,
+    );
     truck2.set_desired_speed(50.0 / Constants::MPS_TO_MPH);
 
     let mut vehicles: Vec<Box<dyn Vehicle>> = Vec::new();
@@ -67,15 +79,13 @@ fn example(sim_output: Box<dyn SimOutput>) {
     vehicles.push(Box::new(truck1));
     vehicles.push(Box::new(truck2));
 
-
     for _ in 0..11 {
         for vehicle in vehicles.iter_mut() {
             vehicle.update_speed(1);
             println!(
-                "{} speed: {:.2} {}",
+                "{} speed: {}",
                 vehicle.type_name(),
-                sim_output.get_speed(vehicle.get_current_speed()),
-                if sim_output.is_metric() { "km/h" } else { "mph" }
+                gui.display_speed(vehicle)
             );
         }
     }
