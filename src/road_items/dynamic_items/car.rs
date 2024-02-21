@@ -1,9 +1,9 @@
 use crate::{
-    road_items::{DynamicRoadItem, Point, RoadItem},
+    road_items::{Point, RoadItem},
     Constants,
 };
 
-use super::Vehicle;
+use super::{DynamicRoadItem, Vehicle};
 
 pub struct Car {
     model: String,
