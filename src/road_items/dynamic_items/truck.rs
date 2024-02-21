@@ -3,7 +3,7 @@ use crate::{
     utils::Constants,
 };
 
-use super::road_items_dynamic::Vehicle;
+use super::Vehicle;
 
 // TODO: consolidate into folder
 

@@ -5,7 +5,7 @@ use crate::{
     Constants,
 };
 
-use super::road_items_dynamic::Vehicle;
+use super::Vehicle;
 
 pub struct Car {
     base: DynamicRoadItem,
