@@ -1,14 +1,16 @@
+use crate::interface::{ISimInput, ISimOutput};
 use crate::road_items_dynamic::Vehicle;
 use crate::utils::Constants;
 use crate::{map::Map, road::Road};
 
 // TODO: decide on gui library
-pub trait GUI {
+pub trait GUI: ISimOutput + ISimInput {
     fn add_road_through_gui(&mut self);
     fn remove_road_through_gui(&mut self, index: usize);
     fn display_map(&self);
-    fn display_speed(&self, v: &mut Box<dyn Vehicle>) -> String; // New method for displaying speed in the appropriate units
-    fn set_desired_speed(&mut self, v: &mut Box<dyn Vehicle>, speed: f64);
+    // Moved to ISimOutput/ISimInput
+    // fn get_speed(&self, v: &mut Box<dyn Vehicle>) -> String;
+    // fn set_speed_limit(&mut self, v: &mut Box<dyn Vehicle>, speed: f64);
 }
 
 pub struct MetricGUI {
@@ -18,6 +20,20 @@ pub struct MetricGUI {
 impl MetricGUI {
     pub fn new() -> Self {
         Self { map: Map::new() }
+    }
+}
+
+impl ISimOutput for MetricGUI {
+    fn get_speed(&self, v: &mut Box<dyn Vehicle>) -> String {
+        // Convert m/s to kph
+        format!("{:.2} kmh", v.get_current_speed() * Constants::MPS_TO_KPH)
+    }
+}
+
+impl ISimInput for MetricGUI {
+    fn set_speed_limit(&mut self, v: &mut Box<dyn Vehicle>, speed: f64) {
+        // Convert kph to m/s
+        v.set_desired_speed(speed / Constants::KPH_TO_MPS)
     }
 }
 
@@ -47,16 +63,6 @@ impl GUI for MetricGUI {
             self.map.total_road_items()
         );
     }
-
-    fn display_speed(&self, v: &mut Box<dyn Vehicle>) -> String {
-        // Convert m/s to kph
-        format!("{:.2} km/h", v.get_current_speed() * Constants::MPS_TO_KPH)
-    }
-
-    fn set_desired_speed(&mut self, v: &mut Box<dyn Vehicle>, speed: f64) {
-        // Convert kph to m/s
-        v.set_desired_speed(speed * Constants::KPH_TO_MPS);
-    }
 }
 
 pub struct ImperialGUI {
@@ -66,6 +72,20 @@ pub struct ImperialGUI {
 impl ImperialGUI {
     pub fn new() -> Self {
         Self { map: Map::new() }
+    }
+}
+
+impl ISimOutput for ImperialGUI {
+    fn get_speed(&self, v: &mut Box<dyn Vehicle>) -> String {
+        // Convert m/s to kph
+        format!("{:.2} mph", v.get_current_speed() * Constants::MPS_TO_MPH)
+    }
+}
+
+impl ISimInput for ImperialGUI {
+    fn set_speed_limit(&mut self, v: &mut Box<dyn Vehicle>, speed: f64) {
+        // Convert mph to m/s
+        v.set_desired_speed(speed * Constants::MPH_TO_MPS);
     }
 }
 
@@ -94,15 +114,5 @@ impl GUI for ImperialGUI {
             "             Total road items on the map: {}",
             self.map.total_road_items()
         );
-    }
-
-    fn display_speed(&self, v: &mut Box<dyn Vehicle>) -> String {
-        // Convert m/s to mph
-        format!("{:.2} mph", v.get_current_speed() * Constants::MPS_TO_MPH)
-    }
-
-    fn set_desired_speed(&mut self, v: &mut Box<dyn Vehicle>, speed: f64) {
-        // Convert mph to m/s
-        v.set_desired_speed(speed * Constants::MPH_TO_MPS);
     }
 }
