@@ -33,7 +33,7 @@ impl ISimOutput for MetricGUI {
 impl ISimInput for MetricGUI {
     fn set_speed_limit(&mut self, v: &mut Box<dyn Vehicle>, speed: f64) {
         // Convert kph to m/s
-        v.set_desired_speed(speed / Constants::KPH_TO_MPS)
+        v.set_desired_speed(speed * Constants::KPH_TO_MPS)
     }
 }
 
