@@ -20,40 +20,44 @@ fn main() {
     } else {
         Box::new(ImperialGUI::new())
     };
-    input.clear();
 
     // Get user input for speed limit
     print!("Enter speed limit: ");
-    io::stdout().flush().expect("Failed to flush stdout"); // Need to flush because print! doesn't automatically flush
+    io::stdout().flush().expect("Failed to flush stdout");
+    let mut speed_limit_str = String::new();
     io::stdin()
-        .read_line(&mut input)
+        .read_line(&mut speed_limit_str)
         .expect("Failed to read line");
+    let speed_limit: f64 = speed_limit_str
+        .trim()
+        .parse()
+        .expect("Please enter a valid number for the speed limit");
 
     // Run example program
     // &mut to make main function maintain ownership of gui
-    example(&mut gui);
+    example(&mut gui, speed_limit);
 
-    gui.add_road_through_gui();
-    gui.display_map();
+    // gui.add_road_through_gui();
+    // gui.display_map();
 
-    gui.remove_road_through_gui(0);
-    gui.display_map();
+    // gui.remove_road_through_gui(0);
+    // gui.display_map();
 }
 
-fn example(gui: &mut Box<dyn GUI>) {
+fn example(gui: &mut Box<dyn GUI>, speed_limit: f64) {
     // Update Speed
     // TODO: move to testing
-    let mut car = Car::new(
+    let mut car: Box<dyn Vehicle> = Box::new(Car::new(
         0.0,
         0.0,
         "Toyota Camry".to_string(),
-        0.0 / Constants::MPS_TO_MPH,
         0.0,
         0.0,
-    );
-    car.set_desired_speed(65.0 / Constants::MPS_TO_MPH);
+        0.0,
+    ));
+    gui.set_desired_speed(&mut car, speed_limit);
 
-    let mut truck1 = Truck::new(
+    let mut truck1: Box<dyn Vehicle> = Box::new(Truck::new(
         0.0,
         0.0,
         "Ford F-150".to_string(),
@@ -61,10 +65,10 @@ fn example(gui: &mut Box<dyn GUI>) {
         0.0,
         0.0,
         4.0,
-    );
-    truck1.set_desired_speed(55.0 / Constants::MPS_TO_MPH);
+    ));
+    gui.set_desired_speed(&mut truck1, speed_limit);
 
-    let mut truck2 = Truck::new(
+    let mut truck2: Box<dyn Vehicle> = Box::new(Truck::new(
         0.0,
         0.0,
         "Volvo VNL 760".to_string(),
@@ -72,13 +76,13 @@ fn example(gui: &mut Box<dyn GUI>) {
         0.0,
         0.0,
         8.0,
-    );
-    truck2.set_desired_speed(50.0 / Constants::MPS_TO_MPH);
+    ));
+    gui.set_desired_speed(&mut truck2, speed_limit);
 
     let mut vehicles: Vec<Box<dyn Vehicle>> = Vec::new();
-    vehicles.push(Box::new(car));
-    vehicles.push(Box::new(truck1));
-    vehicles.push(Box::new(truck2));
+    vehicles.push(car);
+    vehicles.push(truck1);
+    vehicles.push(truck2);
 
     for _ in 0..11 {
         for vehicle in vehicles.iter_mut() {
