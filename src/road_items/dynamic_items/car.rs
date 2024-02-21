@@ -97,3 +97,58 @@ impl Vehicle for Car {
         self.desired_speed = ms;
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn car_creation() {
+        let car = Car::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 60.0);
+        assert_eq!(car.model(), "Tesla Model S");
+        assert_eq!(car.get_current_speed(), 0.0);
+        assert_eq!(car.pos(), Point { x: 0.0, y: 0.0 });
+    }
+
+    #[test]
+    fn car_accelerate() {
+        let mut car = Car::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 50.0);
+        // Simulate acceleration for 1 second
+        car.accelerate(1);
+        // Expected speed increase = ACC_RATE * time (in seconds)
+        let expected_speed = Constants::ACC_RATE * 1.0;
+        assert_eq!(car.get_current_speed(), expected_speed);
+    }
+
+    #[test]
+    fn car_decelerate() {
+        let mut car = Car::new(0.0, 0.0, "Test".to_string(), 100.0, 0.0, 50.0);
+        // Simulate deceleration for 1 second
+        car.decelerate(1);
+        // Expected speed decrease = DEC_RATE * time (in seconds)
+        let expected_speed = 100.0 - Constants::DEC_RATE * 1.0;
+        assert_eq!(car.get_current_speed(), expected_speed);
+    }
+
+    #[test]
+    fn update_speed_increase_towards_desired() {
+        let mut car = Car::new(
+            0.0,
+            0.0,
+            "Test".to_string(),
+            0.0,
+            0.0,
+            Constants::ACC_RATE * 2.0,
+        );
+        // Simulate updating speed for 2 seconds to reach desired speed
+        car.update_speed(2);
+        assert_eq!(car.get_current_speed(), Constants::ACC_RATE * 2.0);
+    }
+
+    #[test]
+    fn set_speed_limit() {
+        let mut car = Car::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 60.0);
+        car.set_speed_limit(70.0);
+        assert_eq!(car.desired_speed, 70.0);
+    }
+}
