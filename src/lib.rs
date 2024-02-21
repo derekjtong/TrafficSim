@@ -1,8 +1,14 @@
-pub mod simulation;
-pub use simulation::*;
+pub mod car;
+pub use car::*;
 
-pub mod road;
-pub use road::*;
+pub mod gui;
+pub use gui::*;
+
+pub mod map;
+pub use map::*;
+
+mod output;
+pub use output::*;
 
 pub mod road_item;
 pub use road_item::*;
@@ -13,20 +19,17 @@ pub use road_items_dynamic::*;
 pub mod road_items_static;
 pub use road_items_static::*;
 
-pub mod utils;
-pub use utils::*;
+pub mod road;
+pub use road::*;
 
-pub mod car;
-pub use car::*;
+pub mod simulation;
+pub use simulation::*;
+
+pub mod timer;
+pub use timer::*;
 
 pub mod truck;
 pub use truck::*;
 
-pub mod gui;
-pub use gui::*;
-
-pub mod map;
-pub use map::*;
-
-mod output;
-pub use output::{SimOutput, ImperialOutput, MetricOutput};
+pub mod utils;
+pub use utils::*;
