@@ -13,7 +13,6 @@ pub struct Car {
     desired_speed: f64,
 }
 
-// Car-specific implementations
 impl Car {
     pub fn new(
         x: f64,

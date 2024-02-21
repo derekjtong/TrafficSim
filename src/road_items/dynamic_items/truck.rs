@@ -5,8 +5,6 @@ use crate::{
 
 use super::Vehicle;
 
-// TODO: consolidate into folder
-
 pub struct Truck {
     base: DynamicRoadItem,
     model: String,
