@@ -1,15 +1,15 @@
 use crate::road_items::{DynamicRoadItem, Point, RoadItem};
 
 pub struct TrafficLight {
-    base: DynamicRoadItem,
     is_green: bool,
+    pos: Point,
 }
 
 impl TrafficLight {
     pub fn new(x: f64, y: f64, is_green: bool) -> Self {
         Self {
-            base: DynamicRoadItem::new(x, y),
             is_green,
+            pos: Point { x, y },
         }
     }
 
@@ -28,14 +28,18 @@ impl TrafficLight {
 
 impl RoadItem for TrafficLight {
     fn set_pos(&mut self, pos: Point) {
-        self.base.set_pos(pos);
+        self.pos = pos;
     }
 
     fn pos(&self) -> Point {
-        self.base.pos()
+        self.pos
     }
 
     fn type_name(&self) -> &'static str {
         "TrafficLight"
     }
+}
+
+impl DynamicRoadItem for TrafficLight {
+    fn update(&mut self, _seconds: i32) {}
 }

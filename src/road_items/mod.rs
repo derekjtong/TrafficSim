@@ -12,7 +12,10 @@ pub trait RoadItem {
     fn pos(&self) -> Point;
     fn type_name(&self) -> &'static str;
     // &'static to keep the string in the binary
-    // TODO: add update() here
+}
+
+pub trait DynamicRoadItem: RoadItem {
+    fn update(&mut self, seconds: i32);
 }
 
 pub struct StaticRoadItem {
@@ -41,33 +44,33 @@ impl RoadItem for StaticRoadItem {
     }
 }
 
-pub struct DynamicRoadItem {
-    pos: Point,
-}
+// pub struct DynamicRoadItem {
+//     pos: Point,
+// }
 
-impl DynamicRoadItem {
-    pub fn new(x: f64, y: f64) -> Self {
-        Self {
-            pos: Point { x, y },
-        }
-    }
+// impl DynamicRoadItem {
+//     pub fn new(x: f64, y: f64) -> Self {
+//         Self {
+//             pos: Point { x, y },
+//         }
+//     }
 
-    pub fn move_by(&mut self, dx: f64, dy: f64) {
-        self.pos.x += dx;
-        self.pos.y += dy;
-    }
-}
+//     pub fn move_by(&mut self, dx: f64, dy: f64) {
+//         self.pos.x += dx;
+//         self.pos.y += dy;
+//     }
+// }
 
-impl RoadItem for DynamicRoadItem {
-    fn set_pos(&mut self, pos: Point) {
-        self.pos = pos;
-    }
+// impl RoadItem for DynamicRoadItem {
+//     fn set_pos(&mut self, pos: Point) {
+//         self.pos = pos;
+//     }
 
-    fn pos(&self) -> Point {
-        self.pos
-    }
+//     fn pos(&self) -> Point {
+//         self.pos
+//     }
 
-    fn type_name(&self) -> &'static str {
-        "DynamicRoadItem"
-    }
-}
+//     fn type_name(&self) -> &'static str {
+//         "DynamicRoadItem"
+//     }
+// }

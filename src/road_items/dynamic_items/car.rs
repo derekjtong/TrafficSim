@@ -6,11 +6,11 @@ use crate::{
 use super::Vehicle;
 
 pub struct Car {
-    base: DynamicRoadItem,
     model: String,
     speed: f64,
     direction: f64,
     desired_speed: f64,
+    pos: Point,
 }
 
 impl Car {
@@ -23,26 +23,32 @@ impl Car {
         desired_speed: f64,
     ) -> Self {
         Self {
-            base: DynamicRoadItem::new(x, y),
             model,
             speed,
             direction,
             desired_speed,
+            pos: Point { x, y },
         }
     }
 }
 
 impl RoadItem for Car {
     fn set_pos(&mut self, pos: Point) {
-        self.base.set_pos(pos);
+        self.pos = pos;
     }
 
     fn pos(&self) -> Point {
-        self.base.pos()
+        self.pos
     }
 
     fn type_name(&self) -> &'static str {
         "Car"
+    }
+}
+
+impl DynamicRoadItem for Car {
+    fn update(&mut self, seconds: i32) {
+        self.update_speed(seconds)
     }
 }
 

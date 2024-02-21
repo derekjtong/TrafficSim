@@ -1,10 +1,10 @@
-use super::RoadItem;
+use super::DynamicRoadItem;
 
 pub mod car;
 pub mod traffic_light;
 pub mod truck;
 
-pub trait Vehicle: RoadItem {
+pub trait Vehicle: DynamicRoadItem {
     fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self
     where
         Self: Sized;
