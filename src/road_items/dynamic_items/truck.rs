@@ -105,3 +105,86 @@ impl Vehicle for Truck {
         self.desired_speed = ms;
     }
 }
+
+#[cfg(test)]
+mod truck_tests {
+    use super::*;
+
+    #[test]
+    fn truck_creation() {
+        let truck = Truck::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 60.0, 10.0);
+        assert_eq!(truck.model(), "Test");
+        assert_eq!(truck.get_current_speed(), 0.0);
+        assert_eq!(truck.pos(), Point { x: 0.0, y: 0.0 });
+        assert_eq!(truck.load_weight, 10.0);
+    }
+
+    #[test]
+    fn truck_accelerate_empty() {
+        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 50.0, 4.0);
+        truck.accelerate(1); // Empty truck acceleration for 1 second
+        let expected_speed = Constants::ACC_RATE_EMPTY * 1.0;
+        assert_eq!(truck.get_current_speed(), expected_speed);
+    }
+
+    #[test]
+    fn truck_accelerate_full() {
+        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 50.0, 6.0);
+        truck.accelerate(1); // Full truck acceleration for 1 second
+        let expected_speed = Constants::ACC_RATE_FULL * 1.0;
+        assert_eq!(truck.get_current_speed(), expected_speed);
+    }
+
+    #[test]
+    fn truck_decelerate_empty() {
+        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 100.0, 0.0, 50.0, 4.0);
+        truck.decelerate(1); // Empty truck deceleration for 1 second
+        let expected_speed = 100.0 - Constants::DEC_RATE_EMPTY * 1.0;
+        assert_eq!(truck.get_current_speed(), expected_speed);
+    }
+
+    #[test]
+    fn truck_decelerate_full() {
+        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 100.0, 0.0, 50.0, 6.0);
+        truck.decelerate(1); // Full truck deceleration for 1 second
+        let expected_speed = 100.0 - Constants::DEC_RATE_FULL * 1.0;
+        assert_eq!(truck.get_current_speed(), expected_speed);
+    }
+
+    #[test]
+    fn update_speed_increase_towards_desired_empty() {
+        let mut truck = Truck::new(
+            0.0,
+            0.0,
+            "Test".to_string(),
+            0.0,
+            0.0,
+            Constants::ACC_RATE_EMPTY * 2.0,
+            4.0,
+        );
+        truck.update_speed(2); // Assuming the empty truck can reach desired speed in 2 seconds
+        assert_eq!(truck.get_current_speed(), Constants::ACC_RATE_EMPTY * 2.0);
+    }
+
+    #[test]
+    fn update_speed_increase_towards_desired_full() {
+        let mut truck = Truck::new(
+            0.0,
+            0.0,
+            "Test".to_string(),
+            0.0,
+            0.0,
+            Constants::ACC_RATE_FULL * 2.0,
+            6.0,
+        );
+        truck.update_speed(2); // Assuming the full truck can reach desired speed in 2 seconds
+        assert_eq!(truck.get_current_speed(), Constants::ACC_RATE_FULL * 2.0);
+    }
+
+    #[test]
+    fn set_speed_limit() {
+        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 60.0, 5.0);
+        truck.set_speed_limit(70.0);
+        assert_eq!(truck.desired_speed, 70.0);
+    }
+}
