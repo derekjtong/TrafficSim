@@ -12,7 +12,7 @@ impl Gui {
 
     pub fn add_road_through_gui(&mut self /*, road_parameters: ... */) {
         self.map.add_road(Road::new());
-        // TODO: imeplement road parameters in road.rs
+        // TODO: implement road parameters in road.rs
         println!("Placeholder: A road has been added.");
     }
 
