@@ -7,8 +7,8 @@ pub use gui::*;
 pub mod map;
 pub use map::*;
 
-mod output;
-pub use output::*;
+mod interface;
+pub use interface::*;
 
 pub mod road_item;
 pub use road_item::*;
