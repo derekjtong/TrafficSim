@@ -8,6 +8,7 @@ pub trait GUI {
     fn remove_road_through_gui(&mut self, index: usize);
     fn display_map(&self);
     fn display_speed(&self, v: &mut Box<dyn Vehicle>) -> String; // New method for displaying speed in the appropriate units
+    fn set_desired_speed(&mut self, v: &mut Box<dyn Vehicle>, speed: f64);
 }
 
 pub struct MetricGUI {
@@ -48,7 +49,13 @@ impl GUI for MetricGUI {
     }
 
     fn display_speed(&self, v: &mut Box<dyn Vehicle>) -> String {
-        format!("{:.2} km/h", v.get_current_speed() * Constants::MPS_TO_MPH) // Convert MPH to KPH
+        // Convert m/s to kph
+        format!("{:.2} km/h", v.get_current_speed() * Constants::MPS_TO_KPH)
+    }
+
+    fn set_desired_speed(&mut self, v: &mut Box<dyn Vehicle>, speed: f64) {
+        // Convert kph to m/s
+        v.set_desired_speed(speed * Constants::KPH_TO_MPS);
     }
 }
 
@@ -90,6 +97,12 @@ impl GUI for ImperialGUI {
     }
 
     fn display_speed(&self, v: &mut Box<dyn Vehicle>) -> String {
-        format!("{:.2} mph", v.get_current_speed()) // Speed is already in MPH
+        // Convert m/s to mph
+        format!("{:.2} mph", v.get_current_speed() * Constants::MPS_TO_MPH)
+    }
+
+    fn set_desired_speed(&mut self, v: &mut Box<dyn Vehicle>, speed: f64) {
+        // Convert mph to m/s
+        v.set_desired_speed(speed * Constants::MPH_TO_MPS);
     }
 }

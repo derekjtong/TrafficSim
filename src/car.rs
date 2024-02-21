@@ -89,4 +89,8 @@ impl Vehicle for Car {
             self.speed = self.desired_speed;
         }
     }
+
+    fn set_speed_limit(&mut self, mph: f64) {
+        self.desired_speed = mph;
+    }
 }

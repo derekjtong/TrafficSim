@@ -50,4 +50,5 @@ pub trait Vehicle: RoadItem {
     fn update_speed(&mut self, seconds: i32);
     fn accelerate(&mut self, seconds: i32);
     fn decelerate(&mut self, seconds: i32);
+    fn set_speed_limit(&mut self, mph: f64);
 }
