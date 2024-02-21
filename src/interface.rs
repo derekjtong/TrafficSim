@@ -1,7 +1,7 @@
 use crate::road_items::dynamic_items::Vehicle;
 
 pub trait ISimOutput {
-    fn get_speed(&self, vehicle: &mut Box<dyn Vehicle>) -> String;
+    fn get_speed(&self, vehicle: &mut Box<dyn Vehicle>) -> f64;
 }
 
 pub trait ISimInput {

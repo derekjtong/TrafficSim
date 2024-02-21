@@ -24,9 +24,9 @@ impl MetricGUI {
 }
 
 impl ISimOutput for MetricGUI {
-    fn get_speed(&self, v: &mut Box<dyn Vehicle>) -> String {
+    fn get_speed(&self, v: &mut Box<dyn Vehicle>) -> f64 {
         // Convert m/s to kph
-        format!("{:.2} kmh", v.get_current_speed() * Constants::MPS_TO_KPH)
+        v.get_current_speed() * Constants::MPS_TO_KPH
     }
 }
 
@@ -76,9 +76,9 @@ impl ImperialGUI {
 }
 
 impl ISimOutput for ImperialGUI {
-    fn get_speed(&self, v: &mut Box<dyn Vehicle>) -> String {
+    fn get_speed(&self, v: &mut Box<dyn Vehicle>) -> f64 {
         // Convert m/s to kph
-        format!("{:.2} mph", v.get_current_speed() * Constants::MPS_TO_MPH)
+        v.get_current_speed() * Constants::MPS_TO_MPH
     }
 }
 
