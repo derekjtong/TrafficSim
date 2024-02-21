@@ -20,7 +20,7 @@ impl Truck {
         x: f64,
         y: f64,
         model: String,
-        speed: f64, // mph
+        speed: f64,
         direction: f64,
         desired_speed: f64,
         load_weight: f64,
@@ -62,8 +62,8 @@ impl Vehicle for Truck {
         &self.model
     }
 
-    fn set_desired_speed(&mut self, mph: f64) {
-        self.desired_speed = mph;
+    fn set_desired_speed(&mut self, ms: f64) {
+        self.desired_speed = ms;
     }
 
     fn get_current_speed(&self) -> f64 {
@@ -102,7 +102,7 @@ impl Vehicle for Truck {
         }
     }
 
-    fn set_speed_limit(&mut self, mph: f64) {
-        self.desired_speed = mph;
+    fn set_speed_limit(&mut self, ms: f64) {
+        self.desired_speed = ms;
     }
 }

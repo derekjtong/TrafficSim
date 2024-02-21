@@ -45,10 +45,10 @@ pub trait Vehicle: RoadItem {
     where
         Self: Sized;
     fn model(&self) -> &String;
-    fn set_desired_speed(&mut self, mph: f64);
+    fn set_desired_speed(&mut self, mps: f64);
     fn get_current_speed(&self) -> f64;
     fn update_speed(&mut self, seconds: i32);
     fn accelerate(&mut self, seconds: i32);
     fn decelerate(&mut self, seconds: i32);
-    fn set_speed_limit(&mut self, mph: f64);
+    fn set_speed_limit(&mut self, ms: f64);
 }

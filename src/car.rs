@@ -58,8 +58,8 @@ impl Vehicle for Car {
         &self.model
     }
 
-    fn set_desired_speed(&mut self, mph: f64) {
-        self.desired_speed = mph;
+    fn set_desired_speed(&mut self, ms: f64) {
+        self.desired_speed = ms;
     }
 
     fn get_current_speed(&self) -> f64 {
@@ -90,7 +90,7 @@ impl Vehicle for Car {
         }
     }
 
-    fn set_speed_limit(&mut self, mph: f64) {
-        self.desired_speed = mph;
+    fn set_speed_limit(&mut self, ms: f64) {
+        self.desired_speed = ms;
     }
 }
