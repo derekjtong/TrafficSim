@@ -83,7 +83,7 @@ fn example(gui: &mut Box<dyn GUI>, speed_limit: f64) {
 
     for _ in 0..11 {
         for vehicle in vehicles.iter_mut() {
-            vehicle.update_speed(1);
+            vehicle.update(1);
             println!(
                 "{} speed: {:.2}",
                 vehicle.type_name(),
