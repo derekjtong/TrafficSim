@@ -14,31 +14,43 @@ use truck::Truck;
 use gui::Gui;
 use utils::Constants;
 use trafficsim::{SimOutput, ImperialOutput, MetricOutput};
+use std::io::{self, Write}; // Write is for flush()
 
 
 fn main() {
-    // Example usage
-    // TODO: remove
-    // let mut road = Road::new();
+    let mut input = String::new();
 
-    // // Create road items on heap and add to road
-    // let dynamic_item = Box::new(DynamicRoadItem::new(1.0, 2.0));
-    // road.add_road_item(dynamic_item);
+    // Get user input for metric or imperial
+    print!("Enter 'M' for metric or 'I' for Imperial: ");
+    io::stdout().flush().expect("Failed to flush stdout"); // Need to flush because print! doesn't automatically flush
+    io::stdin().read_line(&mut input).expect("Failed to read line");
 
-    // let static_item = Box::new(StaticRoadItem::new(3.0, 4.0));
-    // road.add_road_item(static_item);
+    let sim_output: Box<dyn SimOutput> = if input.trim().to_uppercase() == "M" {
+        Box::new(MetricOutput)
+    } else {
+        Box::new(ImperialOutput)
+    };
+    input.clear();
 
-    // let mycar = Box::new(Car::new(0.2, 0.0, "Tesla Model S".to_string(), 60.0, 0.0));
-    // road.add_road_item(mycar);
+    // Get user input for speed limit
+    print!("Enter speed limit: ");
+    io::stdout().flush().expect("Failed to flush stdout"); // Need to flush because print! doesn't automatically flush
+    io::stdin().read_line(&mut input).expect("Failed to read line");
 
-    // let mytruck = Box::new(Truck::new(0.0, 0.0, "Ford F-150".to_string(), 45.0, 0.0, 1000.0));
-    // road.add_road_item(mytruck);
+    // Run example program
+    example(sim_output);
 
-    // // Show road items
-    // for item in road.get_road_items() {
-    //     println!("Road item type: {:?}, position: {:?}", item.type_name(), item.pos());
-    // }
+    // Run GUI example
+    // let mut gui = Gui::new();
 
+    // gui.add_road_through_gui();
+    // gui.display_map();
+
+    // gui.remove_road_through_gui(0);
+    // gui.display_map();
+}
+
+fn example(sim_output: Box<dyn SimOutput>) {
     // Update Speed
     // TODO: move to testing
     let mut car = Car::new(0.0, 0.0, "Toyota Camry".to_string(), 0.0 / Constants::MPS_TO_MPH, 0.0, 0.0);
@@ -55,11 +67,6 @@ fn main() {
     vehicles.push(Box::new(truck1));
     vehicles.push(Box::new(truck2));
 
-    let sim_output: Box<dyn SimOutput> = if use_metric_system() {
-        Box::new(MetricOutput)
-    } else {
-        Box::new(ImperialOutput)
-    };
 
     for _ in 0..11 {
         for vehicle in vehicles.iter_mut() {
@@ -68,24 +75,30 @@ fn main() {
                 "{} speed: {:.2} {}",
                 vehicle.type_name(),
                 sim_output.get_speed(vehicle.get_current_speed()),
-                if use_metric_system() { "km/h" } else { "mph" }
+                if sim_output.is_metric() { "km/h" } else { "mph" }
             );
         }
     }
-
-    // Actual start
-    println!("Start up complete! Starting GUI...");
-
-    let mut gui = Gui::new();
-
-    gui.add_road_through_gui();
-    gui.display_map();
-
-    gui.remove_road_through_gui(0);
-    gui.display_map();
 }
 
-// Dummy function to simulate user input
-fn use_metric_system() -> bool {
-    true
-}
+// Example usage of road, road items, and gui
+
+// let mut road = Road::new();
+
+// // Create road items on heap and add to road
+// let dynamic_item = Box::new(DynamicRoadItem::new(1.0, 2.0));
+// road.add_road_item(dynamic_item);
+
+// let static_item = Box::new(StaticRoadItem::new(3.0, 4.0));
+// road.add_road_item(static_item);
+
+// let mycar = Box::new(Car::new(0.2, 0.0, "Tesla Model S".to_string(), 60.0, 0.0));
+// road.add_road_item(mycar); -
+
+// let mytruck = Box::new(Truck::new(0.0, 0.0, "Ford F-150".to_string(), 45.0, 0.0, 1000.0));
+// road.add_road_item(mytruck);
+
+// // Show road items
+// for item in road.get_road_items() {
+//     println!("Road item type: {:?}, position: {:?}", item.type_name(), item.pos());
+// }
