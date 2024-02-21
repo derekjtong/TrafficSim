@@ -1,6 +1,6 @@
 use std::io::{self, Write};
 use trafficsim::{
-    road_items::dynamic_items::{car::Car, road_items_dynamic::Vehicle, truck::Truck},
+    road_items::dynamic_items::{car::Car, truck::Truck, Vehicle},
     ImperialGUI, MetricGUI, GUI,
 };
 

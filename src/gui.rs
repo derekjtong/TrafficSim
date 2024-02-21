@@ -1,5 +1,5 @@
 use crate::interface::{ISimInput, ISimOutput};
-use crate::road_items::dynamic_items::road_items_dynamic::Vehicle;
+use crate::road_items::dynamic_items::Vehicle;
 use crate::utils::Constants;
 use crate::{map::Map, road::Road};
 
@@ -8,7 +8,7 @@ pub trait GUI: ISimOutput + ISimInput {
     fn add_road_through_gui(&mut self);
     fn remove_road_through_gui(&mut self, index: usize);
     fn display_map(&self);
-    // Moved to ISimOutput/ISimInput in interface.rs
+    // Moved to ISimOutput/ISimInput
     // fn get_speed(&self, v: &mut Box<dyn Vehicle>) -> String;
     // fn set_speed_limit(&mut self, v: &mut Box<dyn Vehicle>, speed: f64);
 }
