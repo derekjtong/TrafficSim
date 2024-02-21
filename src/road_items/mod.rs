@@ -14,10 +14,6 @@ pub trait RoadItem {
     // &'static to keep the string in the binary
 }
 
-pub trait DynamicRoadItem: RoadItem {
-    fn update(&mut self, seconds: i32);
-}
-
 pub struct StaticRoadItem {
     pos: Point,
 }
@@ -42,6 +38,10 @@ impl RoadItem for StaticRoadItem {
     fn type_name(&self) -> &'static str {
         "StaticRoadItem"
     }
+}
+
+pub trait DynamicRoadItem: RoadItem {
+    fn update(&mut self, seconds: i32);
 }
 
 // pub struct DynamicRoadItem {
