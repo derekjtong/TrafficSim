@@ -30,16 +30,17 @@ fn main() {
         .expect("Failed to read line");
 
     // Run example program
-    example(gui);
+    // &mut to make main function maintain ownership of gui
+    example(&mut gui);
 
-    // gui.add_road_through_gui();
-    // gui.display_map();
+    gui.add_road_through_gui();
+    gui.display_map();
 
-    // gui.remove_road_through_gui(0);
-    // gui.display_map();
+    gui.remove_road_through_gui(0);
+    gui.display_map();
 }
 
-fn example(gui: Box<dyn GUI>) {
+fn example(gui: &mut Box<dyn GUI>) {
     // Update Speed
     // TODO: move to testing
     let mut car = Car::new(
