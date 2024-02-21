@@ -102,7 +102,7 @@ mod tests {
     #[test]
     fn car_creation() {
         let car = Car::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 60.0);
-        assert_eq!(car.model(), "Tesla Model S");
+        assert_eq!(car.model(), "Test");
         assert_eq!(car.get_current_speed(), 0.0);
         assert_eq!(car.pos(), Point { x: 0.0, y: 0.0 });
     }
