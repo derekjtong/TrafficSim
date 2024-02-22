@@ -1,4 +1,4 @@
-use crate::interface::{ISimInput, ISimOutput};
+use crate::output::{ISimInput, ISimOutput};
 use crate::road_items::dynamic_items::Vehicle;
 use crate::utils::Constants;
 use crate::{map::Map, road::Road};

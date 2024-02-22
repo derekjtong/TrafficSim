@@ -4,8 +4,8 @@ pub use gui::*;
 pub mod map;
 pub use map::*;
 
-mod interface;
-pub use interface::*;
+mod output;
+pub use output::*;
 
 pub mod road_items;
 
