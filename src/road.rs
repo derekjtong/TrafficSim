@@ -1,5 +1,7 @@
 use crate::road_items::RoadItem;
 
+#[derive(Debug, Clone, Copy)]
+
 pub enum Heading {
     North,
     South,
@@ -34,32 +36,32 @@ impl Road {
         }
     }
 
-    pub fn get_length(self) -> f64 {
+    pub fn get_length(&self) -> f64 {
         self.length
     }
 
-    pub fn get_x_location(self) -> f64 {
+    pub fn get_x_location(&self) -> f64 {
         self.x_location
     }
 
-    pub fn get_y_location(self) -> f64 {
+    pub fn get_y_location(&self) -> f64 {
         self.y_location
     }
 
-    pub fn get_heading(self) -> Heading {
+    pub fn get_heading(&self) -> Heading {
         self.heading
     }
 
-    pub fn get_road_name(self) -> String {
-        self.name
+    pub fn get_road_name(&self) -> &str {
+        &self.name
     }
 
     pub fn add_road_item(&mut self, road_item: Box<dyn RoadItem>) {
         self.items.push(road_item);
     }
 
-    pub fn print(self) {
-        // TODO: interface
+    pub fn print(&self) {
+        // TODO: print interface
     }
 
     pub fn remove_road_item(&mut self, index: usize) {
