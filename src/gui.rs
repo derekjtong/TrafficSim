@@ -39,7 +39,13 @@ impl ISimInput for MetricGUI {
 
 impl GUI for MetricGUI {
     fn add_road_through_gui(&mut self /*, road_parameters: ... */) {
-        self.map.add_road(Road::new());
+        self.map.add_road(Road::new(
+            "test".to_string(),
+            1.0,
+            0.0,
+            0.0,
+            crate::Heading::North,
+        ));
         // TODO: implement road parameters in road.rs
         println!("Placeholder: A road has been added.");
     }
@@ -91,7 +97,13 @@ impl ISimInput for ImperialGUI {
 
 impl GUI for ImperialGUI {
     fn add_road_through_gui(&mut self /*, road_parameters: ... */) {
-        self.map.add_road(Road::new());
+        self.map.add_road(Road::new(
+            "test".to_string(),
+            1.0,
+            1.5,
+            1.5,
+            crate::Heading::North,
+        ));
         // TODO: implement road parameters in road.rs
         println!("Placeholder: A road has been added.");
     }

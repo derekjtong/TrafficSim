@@ -28,7 +28,7 @@ mod map_integration {
     #[test]
     fn test_add_road() {
         let mut map = Map::new();
-        let road = Road::new();
+        let road = Road::new("test".to_string(), 1.0, 0.0, 0.0, crate::Heading::North);
         map.add_road(road);
         assert_eq!(map.get_roads().len(), 1);
     }
@@ -36,7 +36,7 @@ mod map_integration {
     #[test]
     fn test_remove_road() {
         let mut map = Map::new();
-        let road = Road::new();
+        let road = Road::new("test".to_string(), 1.0, 0.0, 0.0, crate::Heading::North);
         map.add_road(road);
         map.remove_road(0);
         assert!(map.get_roads().is_empty());
@@ -52,13 +52,13 @@ mod map_integration {
     #[test]
     fn test_total_road_items() {
         let mut map = Map::new();
-        let mut road1 = Road::new();
+        let mut road1 = Road::new("test".to_string(), 1.0, 0.0, 0.0, crate::Heading::North);
         let item1 = Box::new(TestItem);
         let item2 = Box::new(TestItem);
         road1.add_road_item(item1);
         road1.add_road_item(item2);
 
-        let mut road2 = Road::new();
+        let mut road2 = Road::new("test".to_string(), 1.0, 0.0, 0.0, crate::Heading::North);
         let item3 = Box::new(TestItem);
         road2.add_road_item(item3);
 
