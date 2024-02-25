@@ -30,4 +30,8 @@ impl Map {
             .map(|road| road.get_road_items().len())
             .sum()
     }
+
+    pub fn print(&self) {
+        // TODO: print interface
+    }
 }
