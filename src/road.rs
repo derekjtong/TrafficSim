@@ -1,33 +1,73 @@
 use crate::road_items::RoadItem;
 
+pub enum Heading {
+    North,
+    South,
+    East,
+    West,
+}
+
 pub struct Road {
-    road_items: Vec<Box<dyn RoadItem>>,
-    // TODO: add road parameters
+    items: Vec<Box<dyn RoadItem>>,
+    name: String,
+    length: f64,
+    x_location: f64,
+    y_location: f64,
+    heading: Heading,
 }
 
 impl Road {
-    // Constructor for an empty Road
-    pub fn new() -> Self {
+    pub fn new(
+        name: String,
+        length: f64,
+        x_location: f64,
+        y_location: f64,
+        heading: Heading,
+    ) -> Self {
         Self {
-            road_items: Vec::new(),
+            items: Vec::new(),
+            name,
+            length,
+            x_location,
+            y_location,
+            heading,
         }
     }
 
-    // Constructor with initial road items
-    pub fn with_items(road_items: Vec<Box<dyn RoadItem>>) -> Self {
-        Self { road_items }
+    pub fn get_length(self) -> f64 {
+        self.length
+    }
+
+    pub fn get_x_location(self) -> f64 {
+        self.x_location
+    }
+
+    pub fn get_y_location(self) -> f64 {
+        self.y_location
+    }
+
+    pub fn get_heading(self) -> Heading {
+        self.heading
+    }
+
+    pub fn get_road_name(self) -> String {
+        self.name
     }
 
     pub fn add_road_item(&mut self, road_item: Box<dyn RoadItem>) {
-        self.road_items.push(road_item);
+        self.items.push(road_item);
+    }
+
+    pub fn print(self) {
+        // TODO: interface
     }
 
     pub fn remove_road_item(&mut self, index: usize) {
-        self.road_items.remove(index);
+        self.items.remove(index);
     }
 
     // Get a reference to the road items
     pub fn get_road_items(&self) -> &[Box<dyn RoadItem>] {
-        &self.road_items
+        &self.items
     }
 }
