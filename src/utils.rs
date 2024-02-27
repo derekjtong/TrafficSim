@@ -14,15 +14,16 @@ impl Constants {
     pub const MPS_TO_KPH: f64 = 3.6;
     pub const KPH_TO_MPS: f64 = 0.277778;
 
-    pub const CHAR_MAP_SIZE: f64 = 100.0;
+    pub const CHAR_MAP_SIZE: usize = 100;
     pub const WORLD_SIZE: f64 = 50.0;
 }
 
-pub fn wc_point_to_cc_point(val: f64) -> i32 {
-    ((val * (Constants::CHAR_MAP_SIZE / Constants::WORLD_SIZE)) + (Constants::CHAR_MAP_SIZE / 2.0))
-        .round() as i32
+pub fn wc_point_to_cc_point(val: f64) -> usize {
+    ((val * (Constants::CHAR_MAP_SIZE as f64 / Constants::WORLD_SIZE))
+        + (Constants::CHAR_MAP_SIZE as f64 / 2.0))
+        .round() as usize
 }
 
-pub fn wc_length_to_cc_length(val: f64) -> i32 {
-    (val * (Constants::CHAR_MAP_SIZE / Constants::WORLD_SIZE)).round() as i32
+pub fn wc_length_to_cc_length(val: f64) -> usize {
+    (val * (Constants::CHAR_MAP_SIZE as f64 / Constants::WORLD_SIZE)).round() as usize
 }
