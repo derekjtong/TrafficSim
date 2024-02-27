@@ -1,4 +1,4 @@
-use crate::road_items::RoadItem;
+use crate::{road_items::RoadItem, Drawable, IPrintDriver};
 
 #[derive(Debug, Clone, Copy)]
 pub enum Heading {
@@ -59,8 +59,8 @@ impl Road {
         self.items.push(road_item);
     }
 
-    pub fn print(&self) {
-        // TODO: print interface
+    pub fn print(&self, print: &mut dyn IPrintDriver, d: &mut dyn Drawable) {
+        print.print_road(self, d);
     }
 
     pub fn remove_road_item(&mut self, index: usize) {
