@@ -12,7 +12,7 @@ fn main() {
     let uptown: Road = sim_input.create_road(
         "Uptown".to_string(),
         0.180,
-        -0.09,
+        -0.00,
         -0.07,
         trafficsim::Heading::North,
     );
