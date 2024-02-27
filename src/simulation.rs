@@ -17,7 +17,7 @@ impl Simulation {
     }
 
     pub fn update(&mut self) {
-        for item in self.road_items.iter_mut() {
+        for _item in self.road_items.iter_mut() {
             // TODO: update items, requires implementing the RoadItem update trait (road_item.rs)
         }
     }

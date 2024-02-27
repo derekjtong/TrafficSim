@@ -8,7 +8,7 @@ use super::{DynamicRoadItem, Vehicle};
 pub struct Car {
     model: String,
     speed: f64,
-    direction: f64,
+    _direction: f64,
     desired_speed: f64,
     pos: Point,
 }
@@ -25,7 +25,7 @@ impl Car {
         Self {
             model,
             speed,
-            direction,
+            _direction: direction,
             desired_speed,
             pos: Point { x, y },
         }

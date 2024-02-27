@@ -8,7 +8,7 @@ use super::{DynamicRoadItem, Vehicle};
 pub struct Truck {
     model: String,
     speed: f64,
-    direction: f64,
+    _direction: f64,
     desired_speed: f64,
     load_weight: f64, // tons
     pos: Point,
@@ -27,7 +27,7 @@ impl Truck {
         Self {
             model,
             speed,
-            direction,
+            _direction: direction,
             desired_speed,
             load_weight,
             pos: Point { x, y },
