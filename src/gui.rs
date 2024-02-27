@@ -1,8 +1,8 @@
 use crate::output::{ISimInput, ISimOutput};
+use crate::road::Road;
 use crate::road_items::dynamic_items::Vehicle;
 use crate::utils::Constants;
 use crate::Heading;
-use crate::{map::Map, road::Road};
 
 // TODO: decide on gui library
 pub trait GUI: ISimOutput + ISimInput {
@@ -51,7 +51,13 @@ impl GUI for MetricGUI {
         y_location: f64,
         heading: Heading,
     ) -> Road {
-        Road::new(name, length, x_location, y_location, heading)
+        Road::new(
+            name,
+            length / Constants::M_TO_KM,
+            x_location / Constants::M_TO_KM,
+            y_location / Constants::M_TO_KM,
+            heading,
+        )
     }
 
     fn remove_road_through_gui(&mut self /* add parameters */) {
@@ -59,13 +65,11 @@ impl GUI for MetricGUI {
     }
 }
 
-pub struct ImperialGUI {
-    map: Map,
-}
+pub struct ImperialGUI {}
 
 impl ImperialGUI {
     pub fn new() -> Self {
-        Self { map: Map::new() }
+        Self {}
     }
 }
 
@@ -92,7 +96,13 @@ impl GUI for ImperialGUI {
         y_location: f64,
         heading: Heading,
     ) -> Road {
-        Road::new(name, length, x_location, y_location, heading)
+        Road::new(
+            name,
+            length / Constants::M_TO_MI,
+            x_location / Constants::M_TO_MI,
+            y_location / Constants::M_TO_MI,
+            heading,
+        )
     }
 
     fn remove_road_through_gui(&mut self /* add parameters */) {
