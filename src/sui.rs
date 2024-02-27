@@ -1,14 +1,12 @@
 use crate::{
-    road_items::{
-        dynamic_items::{car::Car, Vehicle},
-        RoadItem,
-    },
+    road_items::{dynamic_items::car::Car, RoadItem},
     wc_length_to_cc_length, wc_point_to_cc_point, Constants, Heading, Road,
 };
 
 pub trait Drawable {
     fn draw_road(&mut self, road: &Road);
     fn draw_car(&mut self, car: &Car);
+    fn print(&self);
 }
 
 pub struct CharMatrix {
@@ -32,13 +30,11 @@ impl Default for CharMatrix {
 
 impl Drawable for CharMatrix {
     fn draw_road(&mut self, road: &Road) {
-        println!("Drawing road on CharMatrix");
-
         let mut x: usize;
         let mut y: usize;
         let mut distance: usize = 0;
         let ccx = wc_point_to_cc_point(road.get_x_location());
-        let ccy = wc_point_to_cc_point(road.get_y_location());
+        let ccy = wc_point_to_cc_point(-road.get_y_location());
         let cc_road_length = wc_length_to_cc_length(road.get_length());
 
         match road.get_heading() {
@@ -46,6 +42,9 @@ impl Drawable for CharMatrix {
                 x = ccx;
                 if x < Constants::CHAR_MAP_SIZE {
                     while distance < cc_road_length {
+                        if distance > ccy {
+                            break;
+                        }
                         y = ccy - distance;
                         if y < Constants::CHAR_MAP_SIZE as usize {
                             self.map[y][x] = '|';
@@ -77,6 +76,12 @@ impl Drawable for CharMatrix {
     fn draw_car(&mut self, car: &Car) {
         println!("Drawing car on CharMatrix {}", car.type_name());
     }
+    fn print(&self) {
+        for row in &self.map {
+            let line: String = row.iter().collect();
+            println!("{}", line);
+        }
+    }
 }
 
 pub trait IPrintDriver {
@@ -85,6 +90,18 @@ pub trait IPrintDriver {
 }
 
 pub struct ConsolePrint {}
+
+impl ConsolePrint {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+
+impl Default for ConsolePrint {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
 impl IPrintDriver for ConsolePrint {
     fn print_road(&self, road: &Road, o: &mut dyn Drawable) {
