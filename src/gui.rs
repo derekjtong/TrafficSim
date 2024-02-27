@@ -4,7 +4,6 @@ use crate::road_items::dynamic_items::Vehicle;
 use crate::utils::Constants;
 use crate::Heading;
 
-// TODO: decide on gui library
 pub trait GUI: ISimOutput + ISimInput {
     fn create_road(
         &mut self,
@@ -14,10 +13,7 @@ pub trait GUI: ISimOutput + ISimInput {
         y_location: f64,
         heading: Heading,
     ) -> Road;
-    fn remove_road_through_gui(&mut self /* add parameters */);
-    // Moved to ISimOutput/ISimInput
-    // fn get_speed(&self, v: &mut Box<dyn Vehicle>) -> String;
-    // fn set_speed_limit(&mut self, v: &mut Box<dyn Vehicle>, speed: f64);
+    fn remove_road(&mut self /* add parameters */);
 }
 
 pub struct MetricGUI {}
@@ -60,7 +56,7 @@ impl GUI for MetricGUI {
         )
     }
 
-    fn remove_road_through_gui(&mut self /* add parameters */) {
+    fn remove_road(&mut self /* add parameters */) {
         println!("Placeholder: GUI remove road called");
     }
 }
@@ -105,7 +101,7 @@ impl GUI for ImperialGUI {
         )
     }
 
-    fn remove_road_through_gui(&mut self /* add parameters */) {
+    fn remove_road(&mut self /* add parameters */) {
         println!("Placeholder: GUI remove road called");
     }
 }
