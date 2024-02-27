@@ -1,11 +1,19 @@
 use crate::output::{ISimInput, ISimOutput};
 use crate::road_items::dynamic_items::Vehicle;
 use crate::utils::Constants;
+use crate::Heading;
 use crate::{map::Map, road::Road};
 
 // TODO: decide on gui library
 pub trait GUI: ISimOutput + ISimInput {
-    fn add_road_through_gui(&mut self);
+    fn create_road(
+        &mut self,
+        name: String,
+        length: f64,
+        x_location: f64,
+        y_location: f64,
+        heading: Heading,
+    );
     fn remove_road_through_gui(&mut self, index: usize);
     fn display_map(&self);
     // Moved to ISimOutput/ISimInput
@@ -38,14 +46,16 @@ impl ISimInput for MetricGUI {
 }
 
 impl GUI for MetricGUI {
-    fn add_road_through_gui(&mut self /*, road_parameters: ... */) {
-        self.map.add_road(Road::new(
-            "test".to_string(),
-            1.0,
-            0.0,
-            0.0,
-            crate::Heading::North,
-        ));
+    fn create_road(
+        &mut self,
+        name: String,
+        length: f64,
+        x_location: f64,
+        y_location: f64,
+        heading: Heading,
+    ) {
+        self.map
+            .add_road(Road::new(name, length, x_location, y_location, heading));
         // TODO: implement road parameters in road.rs
         println!("Placeholder: A road has been added.");
     }
@@ -96,14 +106,16 @@ impl ISimInput for ImperialGUI {
 }
 
 impl GUI for ImperialGUI {
-    fn add_road_through_gui(&mut self /*, road_parameters: ... */) {
-        self.map.add_road(Road::new(
-            "test".to_string(),
-            1.0,
-            1.5,
-            1.5,
-            crate::Heading::North,
-        ));
+    fn create_road(
+        &mut self,
+        name: String,
+        length: f64,
+        x_location: f64,
+        y_location: f64,
+        heading: Heading,
+    ) {
+        self.map
+            .add_road(Road::new(name, length, x_location, y_location, heading));
         // TODO: implement road parameters in road.rs
         println!("Placeholder: A road has been added.");
     }
