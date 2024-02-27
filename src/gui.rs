@@ -13,21 +13,18 @@ pub trait GUI: ISimOutput + ISimInput {
         x_location: f64,
         y_location: f64,
         heading: Heading,
-    );
-    fn remove_road_through_gui(&mut self, index: usize);
-    fn display_map(&self);
+    ) -> Road;
+    fn remove_road_through_gui(&mut self /* add parameters */);
     // Moved to ISimOutput/ISimInput
     // fn get_speed(&self, v: &mut Box<dyn Vehicle>) -> String;
     // fn set_speed_limit(&mut self, v: &mut Box<dyn Vehicle>, speed: f64);
 }
 
-pub struct MetricGUI {
-    map: Map,
-}
+pub struct MetricGUI {}
 
 impl MetricGUI {
     pub fn new() -> Self {
-        Self { map: Map::new() }
+        Self {}
     }
 }
 
@@ -53,31 +50,12 @@ impl GUI for MetricGUI {
         x_location: f64,
         y_location: f64,
         heading: Heading,
-    ) {
-        self.map
-            .add_road(Road::new(name, length, x_location, y_location, heading));
-        // TODO: implement road parameters in road.rs
-        println!("Placeholder: A road has been added.");
+    ) -> Road {
+        Road::new(name, length, x_location, y_location, heading)
     }
 
-    fn remove_road_through_gui(&mut self, index: usize) {
-        self.map.remove_road(index);
-        println!(
-            "Placeholder: A road at index {} has been removed, if it existed.",
-            index
-        );
-    }
-
-    fn display_map(&self) {
-        // TODO: placeholder for actual GUI display logic.
-        println!(
-            "Placeholder: Displaying map with {} roads.",
-            self.map.get_roads().len()
-        );
-        println!(
-            "             Total road items on the map: {}",
-            self.map.total_road_items()
-        );
+    fn remove_road_through_gui(&mut self /* add parameters */) {
+        println!("Placeholder: GUI remove road called");
     }
 }
 
@@ -113,30 +91,11 @@ impl GUI for ImperialGUI {
         x_location: f64,
         y_location: f64,
         heading: Heading,
-    ) {
-        self.map
-            .add_road(Road::new(name, length, x_location, y_location, heading));
-        // TODO: implement road parameters in road.rs
-        println!("Placeholder: A road has been added.");
+    ) -> Road {
+        Road::new(name, length, x_location, y_location, heading)
     }
 
-    fn remove_road_through_gui(&mut self, index: usize) {
-        self.map.remove_road(index);
-        println!(
-            "Placeholder: A road at index {} has been removed, if it existed.",
-            index
-        );
-    }
-
-    fn display_map(&self) {
-        // TODO: placeholder for actual GUI display logic.
-        println!(
-            "Placeholder: Displaying map with {} roads.",
-            self.map.get_roads().len()
-        );
-        println!(
-            "             Total road items on the map: {}",
-            self.map.total_road_items()
-        );
+    fn remove_road_through_gui(&mut self /* add parameters */) {
+        println!("Placeholder: GUI remove road called");
     }
 }
