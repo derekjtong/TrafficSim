@@ -1,6 +1,7 @@
-use crate::road::Road;
+use crate::{road::Road, Drawable, IPrintDriver};
+
 pub struct Map {
-    roads: Vec<Road>,
+    pub roads: Vec<Road>,
 }
 
 impl Map {
@@ -31,7 +32,12 @@ impl Map {
             .sum()
     }
 
-    pub fn print(&self) {
-        // TODO: print interface
+    pub fn print(&self, pd: &dyn IPrintDriver, o: &mut dyn Drawable) {
+        for road in self.roads.iter() {
+            pd.print_road(road, o);
+            // for item in road.get_road_items().iter() {
+            //     pd.print_car(item, o);
+            // }
+        }
     }
 }
