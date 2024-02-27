@@ -1,10 +1,40 @@
 use std::io::{self, Write};
 use trafficsim::{
     road_items::dynamic_items::{car::Car, truck::Truck, Vehicle},
-    ImperialGUI, MetricGUI, GUI,
+    CharMatrix, ConsolePrint, Drawable, IPrintDriver, ImperialGUI, MetricGUI, Road, GUI,
 };
 
 fn main() {
+    let mut sim_input: Box<dyn GUI> = Box::new(MetricGUI::new());
+    let mut map: trafficsim::Map = trafficsim::Map::new();
+    let cp: Box<dyn IPrintDriver> = Box::new(ConsolePrint::new());
+
+    let uptown: Road = sim_input.create_road(
+        "Uptown".to_string(),
+        0.180,
+        -0.09,
+        -0.07,
+        trafficsim::Heading::North,
+    );
+    map.add_road(uptown);
+    let crosstown: Road = sim_input.create_road(
+        "Crosstown".to_string(),
+        0.180,
+        -0.09,
+        0.0,
+        trafficsim::Heading::East,
+    );
+    map.add_road(crosstown);
+
+    let mut cm: Box<dyn Drawable> = Box::new(CharMatrix::new());
+    map.print(&*cp, &mut *cm);
+
+    cm.print();
+
+    // old();
+}
+
+fn _old() {
     let mut input = String::new();
 
     // Get user input for metric or imperial
@@ -34,7 +64,7 @@ fn main() {
 
     // Run example program
     // &mut to make main function maintain ownership of gui
-    example(&mut gui, speed_limit);
+    _example(&mut gui, speed_limit);
 
     // gui.add_road_through_gui();
     // gui.display_map();
@@ -43,7 +73,7 @@ fn main() {
     // gui.display_map();
 }
 
-fn example(gui: &mut Box<dyn GUI>, speed_limit: f64) {
+fn _example(gui: &mut Box<dyn GUI>, speed_limit: f64) {
     let mut car: Box<dyn Vehicle> = Box::new(Car::new(
         0.0,
         0.0,
