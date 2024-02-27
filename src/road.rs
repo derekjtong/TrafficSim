@@ -1,7 +1,6 @@
 use crate::road_items::RoadItem;
 
 #[derive(Debug, Clone, Copy)]
-
 pub enum Heading {
     North,
     South,
