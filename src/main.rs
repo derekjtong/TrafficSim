@@ -9,6 +9,9 @@ fn main() {
     let mut map: trafficsim::Map = trafficsim::Map::new();
     let cp: Box<dyn IPrintDriver> = Box::new(ConsolePrint::new());
 
+    // Old program
+    // _imperial_metric_gui_test();
+
     let uptown: Road = sim_input.create_road(
         "Uptown".to_string(),
         0.180,
@@ -17,6 +20,7 @@ fn main() {
         trafficsim::Heading::North,
     );
     map.add_road(uptown);
+
     let crosstown: Road = sim_input.create_road(
         "Crosstown".to_string(),
         0.180,
@@ -27,14 +31,12 @@ fn main() {
     map.add_road(crosstown);
 
     let mut cm: Box<dyn Drawable> = Box::new(CharMatrix::new());
+
     map.print(&*cp, &mut *cm);
-
     cm.print();
-
-    // old();
 }
 
-fn _old() {
+fn _imperial_metric_gui_test() {
     let mut input = String::new();
 
     // Get user input for metric or imperial
