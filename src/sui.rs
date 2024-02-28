@@ -15,7 +15,7 @@ pub struct CharMatrix {
 
 impl CharMatrix {
     pub fn new() -> Self {
-        let size = Constants::CHAR_MAP_SIZE as usize;
+        let size = Constants::CHAR_MAP_SIZE;
         let output = vec![vec![' '; size]; size];
 
         Self { map: output }
