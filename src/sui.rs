@@ -46,7 +46,7 @@ impl Drawable for CharMatrix {
                             break;
                         }
                         y = ccy - distance;
-                        if y < Constants::CHAR_MAP_SIZE as usize {
+                        if y < Constants::CHAR_MAP_SIZE {
                             self.map[y][x] = '|';
                             self.map[y][x + 2] = '|';
                             self.map[y][x + 4] = '|';
