@@ -1,3 +1,5 @@
+use std::any::Any;
+
 use super::RoadItem;
 
 pub mod car;
@@ -6,6 +8,7 @@ pub mod truck;
 
 pub trait DynamicRoadItem: RoadItem {
     fn update(&mut self, seconds: i32);
+    fn as_any(&self) -> &dyn Any;
 }
 pub trait Vehicle: DynamicRoadItem {
     fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self

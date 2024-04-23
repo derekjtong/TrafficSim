@@ -1,3 +1,5 @@
+use std::any::Any;
+
 use crate::road_items::dynamic_items::DynamicRoadItem;
 use crate::road_items::{Point, RoadItem};
 
@@ -28,6 +30,9 @@ impl TrafficLight {
             time_since_last_update: 0,
         }
     }
+    pub fn current_color(&self) -> LightColor {
+        self.current_color
+    }
 }
 
 impl RoadItem for TrafficLight {
@@ -46,6 +51,7 @@ impl RoadItem for TrafficLight {
 
 impl DynamicRoadItem for TrafficLight {
     fn update(&mut self, seconds: i32) {
+        println!("Called tl update");
         self.time_since_last_update += seconds;
 
         match self.current_color {
@@ -68,5 +74,8 @@ impl DynamicRoadItem for TrafficLight {
                 }
             }
         }
+    }
+    fn as_any(&self) -> &dyn Any {
+        self
     }
 }

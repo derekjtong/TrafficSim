@@ -1,3 +1,5 @@
+use std::any::Any;
+
 use crate::{
     road_items::{Point, RoadItem},
     Constants,
@@ -49,6 +51,9 @@ impl RoadItem for Car {
 impl DynamicRoadItem for Car {
     fn update(&mut self, seconds: i32) {
         self.update_speed(seconds)
+    }
+    fn as_any(&self) -> &dyn Any {
+        self
     }
 }
 
