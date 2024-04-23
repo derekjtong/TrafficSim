@@ -21,14 +21,14 @@ fn main() {
     );
     map.add_road(uptown);
 
-    let crosstown: Road = sim_input.create_road(
-        "Crosstown".to_string(),
-        0.180,
-        -0.09,
-        0.0,
-        trafficsim::Heading::East,
-    );
-    map.add_road(crosstown);
+    // let crosstown: Road = sim_input.create_road(
+    //     "Crosstown".to_string(),
+    //     0.180,
+    //     -0.09,
+    //     0.0,
+    //     trafficsim::Heading::East,
+    // );
+    // map.add_road(crosstown);
 
     let mut cm: Box<dyn Drawable> = Box::new(CharMatrix::new());
 
