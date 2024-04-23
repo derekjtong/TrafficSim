@@ -15,7 +15,10 @@ impl Constants {
     pub const KPH_TO_MPS: f64 = 0.277778;
 
     pub const M_TO_KM: f64 = 0.001;
+    pub const KM_TO_M: f64 = 1000.0;
+
     pub const M_TO_MI: f64 = 0.000621371;
+    pub const MI_TO_M: f64 = 1609.34;
 
     pub const CHAR_MAP_SIZE: usize = 40;
     pub const WORLD_SIZE: f64 = 200.0;
