@@ -24,11 +24,14 @@ fn main() {
     map.add_road(uptown);
 
     // Create traffic light smart pointer (Rc) with mutable interior access (RefCell)
-    let traffic_light = sim_input.create_traffic_light(-0.005, -0.00, 3, 2, 3, LightColor::Red);
+    let traffic_light = sim_input.create_traffic_light(-0.005, 0.04, 3, 2, 3, LightColor::Red);
+    let traffic_light2 = sim_input.create_traffic_light(-0.005, -0.03, 3, 2, 3, LightColor::Red);
 
     // Cloning smart pointer, not the RefCell traffic light instance
     simulation.add_dynamic_item(traffic_light.clone());
     map.add_dynamic_item(traffic_light.clone());
+    simulation.add_dynamic_item(traffic_light2.clone());
+    map.add_dynamic_item(traffic_light2.clone());
 
     // Create the timer
     let mut timer = Timer::new(simulation, map, cp, cm);
