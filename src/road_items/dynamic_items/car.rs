@@ -42,6 +42,7 @@ impl RoadItem for Car {
     fn get_x_location(&self) -> f64 {
         self.x_location
     }
+
     fn get_y_location(&self) -> f64 {
         self.y_location
     }
@@ -55,6 +56,7 @@ impl DynamicRoadItem for Car {
     fn update(&mut self, seconds: i32) {
         self.update_speed(seconds)
     }
+
     fn as_any(&self) -> &dyn Any {
         self
     }

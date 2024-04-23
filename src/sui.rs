@@ -83,12 +83,15 @@ impl Drawable for CharMatrix {
             Heading::West => {}
         }
     }
+
     fn draw_car(&mut self, car: &Car) {
         println!("Drawing car on CharMatrix {}", car.type_name());
     }
+
     fn draw_truck(&mut self, truck: &Truck) {
         println!("Drawing truck on CharMatrix {}", truck.type_name());
     }
+
     fn draw_traffic_light(&mut self, traffic_light: &TrafficLight) {
         let x = wc_point_to_cc_point(traffic_light.get_x_location());
         let y = wc_point_to_cc_point(-traffic_light.get_y_location());
@@ -100,6 +103,7 @@ impl Drawable for CharMatrix {
             };
         }
     }
+
     fn print(&self) {
         for row in &self.map {
             let line: String = row.iter().collect();
@@ -133,12 +137,15 @@ impl IPrintDriver for ConsolePrint {
     fn print_road(&self, road: &Road, o: &mut dyn Drawable) {
         o.draw_road(road);
     }
+
     fn print_car(&self, car: &Car, o: &mut dyn Drawable) {
         o.draw_car(car);
     }
+
     fn print_truck(&self, car: &Truck, o: &mut dyn Drawable) {
         o.draw_truck(car);
     }
+
     fn print_dynamic_item(&self, item: &dyn DynamicRoadItem, o: &mut dyn Drawable) {
         if let Some(car) = item.as_any().downcast_ref::<Car>() {
             o.draw_car(car);

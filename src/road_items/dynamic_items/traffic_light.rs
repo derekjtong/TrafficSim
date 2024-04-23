@@ -46,6 +46,7 @@ impl RoadItem for TrafficLight {
     fn get_x_location(&self) -> f64 {
         self.x_location
     }
+
     fn get_y_location(&self) -> f64 {
         self.y_location
     }

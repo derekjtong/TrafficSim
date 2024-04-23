@@ -25,9 +25,11 @@ impl RoadItem for Intersection {
     fn get_x_location(&self) -> f64 {
         self.x_location
     }
+
     fn get_y_location(&self) -> f64 {
         self.y_location
     }
+
     fn type_name(&self) -> &'static str {
         "Intersection"
     }
