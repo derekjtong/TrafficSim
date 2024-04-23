@@ -1,8 +1,8 @@
 use crate::road_items::dynamic_items::DynamicRoadItem;
-use std::vec::Vec;
+use std::{cell::RefCell, rc::Rc, vec::Vec};
 
 pub struct Simulation {
-    dynamic_items: Vec<Box<dyn DynamicRoadItem>>,
+    dynamic_items: Vec<Rc<RefCell<dyn DynamicRoadItem>>>,
 }
 
 impl Simulation {
@@ -12,15 +12,13 @@ impl Simulation {
         }
     }
 
-    // Add dynamic road items to the simulation
-    pub fn add_dynamic_item(&mut self, item: Box<dyn DynamicRoadItem>) {
+    pub fn add_dynamic_item(&mut self, item: Rc<RefCell<dyn DynamicRoadItem>>) {
         self.dynamic_items.push(item);
     }
 
-    // Update method that will call update method for each dynamic road item
     pub fn update(&mut self, seconds: i32) {
-        for item in self.dynamic_items.iter_mut() {
-            item.update(seconds);
+        for item in &self.dynamic_items {
+            item.borrow_mut().update(seconds);
         }
     }
 }

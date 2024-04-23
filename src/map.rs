@@ -1,16 +1,26 @@
-use crate::{road::Road, Drawable, IPrintDriver};
+use std::{cell::RefCell, rc::Rc};
+
+use crate::{road::Road, road_items::dynamic_items::DynamicRoadItem, Drawable, IPrintDriver};
 
 pub struct Map {
     pub roads: Vec<Road>,
+    dynamic_items: Vec<Rc<RefCell<dyn DynamicRoadItem>>>,
 }
 
 impl Map {
     pub fn new() -> Self {
-        Self { roads: Vec::new() }
+        Self {
+            roads: Vec::new(),
+            dynamic_items: Vec::new(),
+        }
     }
 
     pub fn add_road(&mut self, road: Road) {
         self.roads.push(road);
+    }
+
+    pub fn add_dynamic_item(&mut self, item: Rc<RefCell<dyn DynamicRoadItem>>) {
+        self.dynamic_items.push(item);
     }
 
     pub fn remove_road(&mut self, index: usize) {
@@ -38,6 +48,10 @@ impl Map {
             // for item in road.get_road_items().iter() {
             //     pd.print_car(item, o);
             // }
+        }
+        for dynamic_item in &self.dynamic_items {
+            let item = dynamic_item.borrow();
+            pd.print_dynamic_item(&*item, o);
         }
     }
 }
