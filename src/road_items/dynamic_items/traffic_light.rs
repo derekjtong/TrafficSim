@@ -1,30 +1,32 @@
+use crate::road_items::dynamic_items::DynamicRoadItem;
 use crate::road_items::{Point, RoadItem};
 
-use super::DynamicRoadItem;
+#[derive(Debug, Clone, Copy)]
+pub enum LightColor {
+    Red,
+    Yellow,
+    Green,
+}
 
 pub struct TrafficLight {
-    is_green: bool,
     pos: Point,
+    red_duration: i32,
+    yellow_duration: i32,
+    green_duration: i32,
+    current_color: LightColor,
+    time_since_last_update: i32,
 }
 
 impl TrafficLight {
-    pub fn new(x: f64, y: f64, is_green: bool) -> Self {
+    pub fn new(x: f64, y: f64, red: i32, yellow: i32, green: i32, start_color: LightColor) -> Self {
         Self {
-            is_green,
             pos: Point { x, y },
+            red_duration: red,
+            yellow_duration: yellow,
+            green_duration: green,
+            current_color: start_color,
+            time_since_last_update: 0,
         }
-    }
-
-    pub fn set_green(&mut self) {
-        self.is_green = true;
-    }
-
-    pub fn set_red(&mut self) {
-        self.is_green = false;
-    }
-
-    pub fn is_green(&self) -> bool {
-        self.is_green
     }
 }
 
@@ -43,5 +45,28 @@ impl RoadItem for TrafficLight {
 }
 
 impl DynamicRoadItem for TrafficLight {
-    fn update(&mut self, _seconds: i32) {}
+    fn update(&mut self, seconds: i32) {
+        self.time_since_last_update += seconds;
+
+        match self.current_color {
+            LightColor::Red => {
+                if self.time_since_last_update >= self.red_duration {
+                    self.current_color = LightColor::Green;
+                    self.time_since_last_update = 0;
+                }
+            }
+            LightColor::Yellow => {
+                if self.time_since_last_update >= self.yellow_duration {
+                    self.current_color = LightColor::Red;
+                    self.time_since_last_update = 0;
+                }
+            }
+            LightColor::Green => {
+                if self.time_since_last_update >= self.green_duration {
+                    self.current_color = LightColor::Yellow;
+                    self.time_since_last_update = 0;
+                }
+            }
+        }
+    }
 }
