@@ -1,11 +1,21 @@
 use crate::{
-    road_items::{dynamic_items::car::Car, RoadItem},
+    road_items::{
+        dynamic_items::{
+            car::Car,
+            traffic_light::{LightColor, TrafficLight},
+            truck::Truck,
+            DynamicRoadItem,
+        },
+        RoadItem,
+    },
     wc_length_to_cc_length, wc_point_to_cc_point, Constants, Heading, Road,
 };
 
 pub trait Drawable {
     fn draw_road(&mut self, road: &Road);
     fn draw_car(&mut self, car: &Car);
+    fn draw_truck(&mut self, truck: &Truck);
+    fn draw_traffic_light(&mut self, traffic_light: &TrafficLight);
     fn print(&self);
 }
 
@@ -76,6 +86,20 @@ impl Drawable for CharMatrix {
     fn draw_car(&mut self, car: &Car) {
         println!("Drawing car on CharMatrix {}", car.type_name());
     }
+    fn draw_truck(&mut self, truck: &Truck) {
+        println!("Drawing truck on CharMatrix {}", truck.type_name());
+    }
+    fn draw_traffic_light(&mut self, traffic_light: &TrafficLight) {
+        let x = wc_point_to_cc_point(traffic_light.pos().x);
+        let y = wc_point_to_cc_point(-traffic_light.pos().y);
+        if x < Constants::CHAR_MAP_SIZE && y < Constants::CHAR_MAP_SIZE {
+            self.map[y][x] = match traffic_light.current_color() {
+                LightColor::Red => 'R',
+                LightColor::Yellow => 'Y',
+                LightColor::Green => 'G',
+            };
+        }
+    }
     fn print(&self) {
         for row in &self.map {
             let line: String = row.iter().collect();
@@ -87,6 +111,8 @@ impl Drawable for CharMatrix {
 pub trait IPrintDriver {
     fn print_road(&self, r: &Road, o: &mut dyn Drawable);
     fn print_car(&self, v: &Car, o: &mut dyn Drawable);
+    fn print_truck(&self, v: &Truck, o: &mut dyn Drawable);
+    fn print_dynamic_item(&self, item: &dyn DynamicRoadItem, o: &mut dyn Drawable);
 }
 
 pub struct ConsolePrint {}
@@ -109,5 +135,19 @@ impl IPrintDriver for ConsolePrint {
     }
     fn print_car(&self, car: &Car, o: &mut dyn Drawable) {
         o.draw_car(car);
+    }
+    fn print_truck(&self, car: &Truck, o: &mut dyn Drawable) {
+        o.draw_truck(car);
+    }
+    fn print_dynamic_item(&self, item: &dyn DynamicRoadItem, o: &mut dyn Drawable) {
+        if let Some(car) = item.as_any().downcast_ref::<Car>() {
+            o.draw_car(car);
+        } else if let Some(truck) = item.as_any().downcast_ref::<Truck>() {
+            o.draw_truck(truck);
+        } else if let Some(traffic_light) = item.as_any().downcast_ref::<TrafficLight>() {
+            o.draw_traffic_light(traffic_light);
+        } else {
+            eprintln!("Unrecognized dynamic item type");
+        }
     }
 }
