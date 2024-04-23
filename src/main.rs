@@ -1,8 +1,6 @@
-use std::{cell::RefCell, rc::Rc};
-
 use trafficsim::{
-    road_items::dynamic_items::traffic_light::{LightColor, TrafficLight},
-    CharMatrix, ConsolePrint, Drawable, IPrintDriver, MetricGUI, Road, Simulation, Timer, GUI,
+    road_items::dynamic_items::traffic_light::LightColor, CharMatrix, ConsolePrint, Drawable,
+    IPrintDriver, MetricGUI, Road, Simulation, Timer, GUI,
 };
 
 fn main() {
