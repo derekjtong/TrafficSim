@@ -2,17 +2,37 @@ use trafficsim::*;
 
 #[cfg(test)]
 mod map_integration {
-    use trafficsim::road_items::{Point, RoadItem};
+    use trafficsim::road_items::RoadItem;
 
     use crate::map::Map;
     use crate::road::Road;
 
     // Dummy RoadItem for testing purposes
-    struct TestItem;
+    struct TestItem {
+        x_location: f64,
+        y_location: f64,
+    }
+
+    impl TestItem {
+        pub fn new(x: f64, y: f64) -> Self {
+            Self {
+                x_location: x,
+                y_location: y,
+            }
+        }
+    }
+
     impl RoadItem for TestItem {
-        fn set_pos(&mut self, _pos: Point) {}
-        fn pos(&self) -> Point {
-            Point { x: 0.0, y: 0.0 }
+        fn set_pos(&mut self, x: f64, y: f64) {
+            self.x_location = x;
+            self.y_location = y;
+        }
+
+        fn get_x_location(&self) -> f64 {
+            self.x_location
+        }
+        fn get_y_location(&self) -> f64 {
+            self.y_location
         }
         fn type_name(&self) -> &'static str {
             "TestItem"
@@ -53,13 +73,13 @@ mod map_integration {
     fn test_total_road_items() {
         let mut map = Map::new();
         let mut road1 = Road::new("test".to_string(), 1.0, 0.0, 0.0, crate::Heading::North);
-        let item1 = Box::new(TestItem);
-        let item2 = Box::new(TestItem);
+        let item1 = Box::new(TestItem::new(0.0, 0.0));
+        let item2 = Box::new(TestItem::new(0.0, 0.0));
         road1.add_road_item(item1);
         road1.add_road_item(item2);
 
         let mut road2 = Road::new("test".to_string(), 1.0, 0.0, 0.0, crate::Heading::North);
-        let item3 = Box::new(TestItem);
+        let item3 = Box::new(TestItem::new(0.0, 0.0));
         road2.add_road_item(item3);
 
         map.add_road(road1);

@@ -13,20 +13,20 @@ fn main() {
     let mut simulation = Simulation::new();
 
     // Create road
-    let uptown: Road = sim_input.create_road(
-        "Uptown".to_string(),
-        0.180,
-        -0.03,
-        -0.09,
-        trafficsim::Heading::North,
-    );
-    // Add road to map
-    map.add_road(uptown);
+    // let uptown: Road = sim_input.create_road(
+    //     "Uptown".to_string(),
+    //     0.180,
+    //     -0.03,
+    //     -0.09,
+    //     trafficsim::Heading::North,
+    // );
+    // // Add road to map
+    // map.add_road(uptown);
 
     // Create traffic light smart pointer (Rc) with mutable interior access (RefCell)
     let traffic_light = Rc::new(RefCell::new(TrafficLight::new(
         -0.01,
-        -0.09,
+        -0.01,
         3,
         1,
         3,

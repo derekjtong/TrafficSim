@@ -90,8 +90,8 @@ impl Drawable for CharMatrix {
         println!("Drawing truck on CharMatrix {}", truck.type_name());
     }
     fn draw_traffic_light(&mut self, traffic_light: &TrafficLight) {
-        let x = wc_point_to_cc_point(traffic_light.pos().x);
-        let y = wc_point_to_cc_point(-traffic_light.pos().y);
+        let x = wc_point_to_cc_point(traffic_light.get_x_location());
+        let y = wc_point_to_cc_point(-traffic_light.get_y_location());
         if x < Constants::CHAR_MAP_SIZE && y < Constants::CHAR_MAP_SIZE {
             self.map[y][x] = match traffic_light.current_color() {
                 LightColor::Red => 'R',

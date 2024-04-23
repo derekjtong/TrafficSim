@@ -1,7 +1,7 @@
 use std::any::Any;
 
 use crate::road_items::dynamic_items::DynamicRoadItem;
-use crate::road_items::{Point, RoadItem};
+use crate::road_items::RoadItem;
 
 #[derive(Debug, Clone, Copy)]
 pub enum LightColor {
@@ -11,7 +11,8 @@ pub enum LightColor {
 }
 
 pub struct TrafficLight {
-    pos: Point,
+    x_location: f64,
+    y_location: f64,
     red_duration: i32,
     yellow_duration: i32,
     green_duration: i32,
@@ -22,7 +23,8 @@ pub struct TrafficLight {
 impl TrafficLight {
     pub fn new(x: f64, y: f64, red: i32, yellow: i32, green: i32, start_color: LightColor) -> Self {
         Self {
-            pos: Point { x, y },
+            x_location: x,
+            y_location: y,
             red_duration: red,
             yellow_duration: yellow,
             green_duration: green,
@@ -36,12 +38,16 @@ impl TrafficLight {
 }
 
 impl RoadItem for TrafficLight {
-    fn set_pos(&mut self, pos: Point) {
-        self.pos = pos;
+    fn set_pos(&mut self, x: f64, y: f64) {
+        self.x_location = x;
+        self.y_location = y;
     }
 
-    fn pos(&self) -> Point {
-        self.pos
+    fn get_x_location(&self) -> f64 {
+        self.x_location
+    }
+    fn get_y_location(&self) -> f64 {
+        self.y_location
     }
 
     fn type_name(&self) -> &'static str {

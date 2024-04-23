@@ -1,18 +1,16 @@
 use std::any::Any;
 
-use crate::{
-    road_items::{Point, RoadItem},
-    Constants,
-};
+use crate::{road_items::RoadItem, Constants};
 
 use super::{DynamicRoadItem, Vehicle};
 
 pub struct Car {
+    x_location: f64,
+    y_location: f64,
     model: String,
     speed: f64,
     _direction: f64,
     desired_speed: f64,
-    pos: Point,
 }
 
 impl Car {
@@ -25,22 +23,27 @@ impl Car {
         desired_speed: f64,
     ) -> Self {
         Self {
+            x_location: x,
+            y_location: y,
             model,
             speed,
             _direction: direction,
             desired_speed,
-            pos: Point { x, y },
         }
     }
 }
 
 impl RoadItem for Car {
-    fn set_pos(&mut self, pos: Point) {
-        self.pos = pos;
+    fn set_pos(&mut self, x: f64, y: f64) {
+        self.x_location = x;
+        self.y_location = y;
     }
 
-    fn pos(&self) -> Point {
-        self.pos
+    fn get_x_location(&self) -> f64 {
+        self.x_location
+    }
+    fn get_y_location(&self) -> f64 {
+        self.y_location
     }
 
     fn type_name(&self) -> &'static str {
@@ -115,7 +118,8 @@ mod tests {
         let car = Car::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 60.0);
         assert_eq!(car.model(), "Test");
         assert_eq!(car.get_current_speed(), 0.0);
-        assert_eq!(car.pos(), Point { x: 0.0, y: 0.0 });
+        assert_eq!(car.get_x_location(), 0.0);
+        assert_eq!(car.get_y_location(), 0.0);
     }
 
     #[test]
