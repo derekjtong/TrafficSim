@@ -4,7 +4,7 @@ use std::rc::Rc;
 use crate::output::{ISimInput, ISimOutput};
 use crate::road::Road;
 use crate::road_items::dynamic_items::traffic_light::{LightColor, TrafficLight};
-use crate::road_items::dynamic_items::{DynamicRoadItem, Vehicle};
+use crate::road_items::dynamic_items::Vehicle;
 use crate::utils::Constants;
 use crate::Heading;
 
@@ -72,6 +72,7 @@ impl GUI for MetricGUI {
     fn remove_road(&mut self /* add parameters */) {
         println!("Placeholder: GUI remove road called");
     }
+
     fn create_traffic_light(
         &self,
         x_location: f64,
@@ -135,6 +136,7 @@ impl GUI for ImperialGUI {
     fn remove_road(&mut self /* add parameters */) {
         println!("Placeholder: GUI remove road called");
     }
+
     fn create_traffic_light(
         &self,
         x_location: f64,
