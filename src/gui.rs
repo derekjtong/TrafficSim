@@ -1,6 +1,10 @@
+use std::cell::RefCell;
+use std::rc::Rc;
+
 use crate::output::{ISimInput, ISimOutput};
 use crate::road::Road;
-use crate::road_items::dynamic_items::Vehicle;
+use crate::road_items::dynamic_items::traffic_light::{LightColor, TrafficLight};
+use crate::road_items::dynamic_items::{DynamicRoadItem, Vehicle};
 use crate::utils::Constants;
 use crate::Heading;
 
@@ -14,6 +18,15 @@ pub trait GUI: ISimOutput + ISimInput {
         heading: Heading,
     ) -> Road;
     fn remove_road(&mut self /* add parameters */);
+    fn create_traffic_light(
+        &self,
+        x_location: f64,
+        y_location: f64,
+        red_duration: i32,
+        yellow_duration: i32,
+        green_duration: i32,
+        initial_color: LightColor,
+    ) -> Rc<RefCell<TrafficLight>>;
 }
 
 pub struct MetricGUI {}
@@ -49,15 +62,33 @@ impl GUI for MetricGUI {
     ) -> Road {
         Road::new(
             name,
-            length / Constants::M_TO_KM,
-            x_location / Constants::M_TO_KM,
-            y_location / Constants::M_TO_KM,
+            length * Constants::KM_TO_M,
+            x_location * Constants::KM_TO_M,
+            y_location * Constants::KM_TO_M,
             heading,
         )
     }
 
     fn remove_road(&mut self /* add parameters */) {
         println!("Placeholder: GUI remove road called");
+    }
+    fn create_traffic_light(
+        &self,
+        x_location: f64,
+        y_location: f64,
+        red_duration: i32,
+        yellow_duration: i32,
+        green_duration: i32,
+        initial_color: LightColor,
+    ) -> Rc<RefCell<TrafficLight>> {
+        Rc::new(RefCell::new(TrafficLight::new(
+            x_location * Constants::KM_TO_M,
+            y_location * Constants::KM_TO_M,
+            red_duration,
+            yellow_duration,
+            green_duration,
+            initial_color,
+        )))
     }
 }
 
@@ -94,14 +125,32 @@ impl GUI for ImperialGUI {
     ) -> Road {
         Road::new(
             name,
-            length / Constants::M_TO_MI,
-            x_location / Constants::M_TO_MI,
-            y_location / Constants::M_TO_MI,
+            length * Constants::MI_TO_M,
+            x_location * Constants::MI_TO_M,
+            y_location * Constants::MI_TO_M,
             heading,
         )
     }
 
     fn remove_road(&mut self /* add parameters */) {
         println!("Placeholder: GUI remove road called");
+    }
+    fn create_traffic_light(
+        &self,
+        x_location: f64,
+        y_location: f64,
+        red_duration: i32,
+        yellow_duration: i32,
+        green_duration: i32,
+        initial_color: LightColor,
+    ) -> Rc<RefCell<TrafficLight>> {
+        Rc::new(RefCell::new(TrafficLight::new(
+            x_location * Constants::MI_TO_M,
+            y_location * Constants::MI_TO_M,
+            red_duration,
+            yellow_duration,
+            green_duration,
+            initial_color,
+        )))
     }
 }
