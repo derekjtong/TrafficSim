@@ -57,7 +57,6 @@ impl RoadItem for TrafficLight {
 
 impl DynamicRoadItem for TrafficLight {
     fn update(&mut self, seconds: i32) {
-        println!("Called tl update");
         self.time_since_last_update += seconds;
 
         match self.current_color {
