@@ -1,29 +1,26 @@
-use crate::road_items::RoadItem;
+use crate::road_items::dynamic_items::DynamicRoadItem;
+use std::vec::Vec;
 
 pub struct Simulation {
-    // TODO: one array for everything or a separate array for each type of road item?
-    road_items: Vec<Box<dyn RoadItem>>,
+    dynamic_items: Vec<Box<dyn DynamicRoadItem>>,
 }
 
 impl Simulation {
     pub fn new() -> Self {
         Self {
-            road_items: Vec::new(),
+            dynamic_items: Vec::new(),
         }
     }
 
-    pub fn add_road_item(&mut self, item: Box<dyn RoadItem>) {
-        self.road_items.push(item);
+    // Add dynamic road items to the simulation
+    pub fn add_dynamic_item(&mut self, item: Box<dyn DynamicRoadItem>) {
+        self.dynamic_items.push(item);
     }
 
-    pub fn update(&mut self) {
-        for _item in self.road_items.iter_mut() {
-            // TODO: update items, requires implementing the RoadItem update trait (road_item.rs)
+    // Update method that will call update method for each dynamic road item
+    pub fn update(&mut self, seconds: i32) {
+        for item in self.dynamic_items.iter_mut() {
+            item.update(seconds);
         }
-    }
-
-    // TODO: visualization
-    pub fn get_road_items(&self) -> &Vec<Box<dyn RoadItem>> {
-        &self.road_items
     }
 }
