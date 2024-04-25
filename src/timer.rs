@@ -33,9 +33,10 @@ impl Timer {
             print!("{}[2J", 27 as char);
 
             // Update simulation
-            self.simulation.update(1); // assuming 1 second has passed
+            self.simulation.update(1);
 
             // Print the map and dynamic road items
+            self.drawable.clear();
             self.map.print(&*self.print_driver, &mut *self.drawable);
             self.drawable.print();
 
