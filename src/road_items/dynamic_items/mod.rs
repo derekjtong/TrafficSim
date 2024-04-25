@@ -1,5 +1,7 @@
 use std::any::Any;
 
+use crate::Heading;
+
 use super::RoadItem;
 
 pub mod car;
@@ -11,7 +13,14 @@ pub trait DynamicRoadItem: RoadItem {
     fn as_any(&self) -> &dyn Any;
 }
 pub trait Vehicle: DynamicRoadItem {
-    fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self
+    fn new(
+        x: f64,
+        y: f64,
+        model: String,
+        speed: f64,
+        direction: Heading,
+        desired_speed: f64,
+    ) -> Self
     where
         Self: Sized;
     fn model(&self) -> &String;

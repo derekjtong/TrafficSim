@@ -1,6 +1,6 @@
 use std::any::Any;
 
-use crate::{road_items::RoadItem, utils::Constants};
+use crate::{road_items::RoadItem, utils::Constants, Heading};
 
 use super::{DynamicRoadItem, Vehicle};
 
@@ -9,7 +9,7 @@ pub struct Truck {
     y_location: f64,
     model: String,
     speed: f64,
-    _direction: f64,
+    _direction: Heading,
     desired_speed: f64,
     load_weight: f64, // tons
 }
@@ -20,7 +20,7 @@ impl Truck {
         y: f64,
         model: String,
         speed: f64,
-        direction: f64,
+        direction: Heading,
         desired_speed: f64,
         load_weight: f64,
     ) -> Self {
@@ -65,7 +65,14 @@ impl DynamicRoadItem for Truck {
 }
 
 impl Vehicle for Truck {
-    fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self
+    fn new(
+        x: f64,
+        y: f64,
+        model: String,
+        speed: f64,
+        direction: Heading,
+        desired_speed: f64,
+    ) -> Self
     where
         Self: Sized,
     {
@@ -127,7 +134,15 @@ mod truck_tests {
 
     #[test]
     fn truck_creation() {
-        let truck = Truck::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 60.0, 10.0);
+        let truck = Truck::new(
+            0.0,
+            0.0,
+            "Test".to_string(),
+            0.0,
+            Heading::North,
+            60.0,
+            10.0,
+        );
         assert_eq!(truck.model(), "Test");
         assert_eq!(truck.get_current_speed(), 0.0);
         assert_eq!(truck.get_x_location(), 0.0);
@@ -137,7 +152,7 @@ mod truck_tests {
 
     #[test]
     fn truck_accelerate_empty() {
-        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 50.0, 4.0);
+        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 0.0, Heading::North, 50.0, 4.0);
         truck.accelerate(1); // Empty truck acceleration for 1 second
         let expected_speed = Constants::ACC_RATE_EMPTY * 1.0;
         assert_eq!(truck.get_current_speed(), expected_speed);
@@ -145,7 +160,7 @@ mod truck_tests {
 
     #[test]
     fn truck_accelerate_full() {
-        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 50.0, 6.0);
+        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 0.0, Heading::North, 50.0, 6.0);
         truck.accelerate(1); // Full truck acceleration for 1 second
         let expected_speed = Constants::ACC_RATE_FULL * 1.0;
         assert_eq!(truck.get_current_speed(), expected_speed);
@@ -153,7 +168,15 @@ mod truck_tests {
 
     #[test]
     fn truck_decelerate_empty() {
-        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 100.0, 0.0, 50.0, 4.0);
+        let mut truck = Truck::new(
+            0.0,
+            0.0,
+            "Test".to_string(),
+            100.0,
+            Heading::North,
+            50.0,
+            4.0,
+        );
         truck.decelerate(1); // Empty truck deceleration for 1 second
         let expected_speed = 100.0 - Constants::DEC_RATE_EMPTY * 1.0;
         assert_eq!(truck.get_current_speed(), expected_speed);
@@ -161,7 +184,15 @@ mod truck_tests {
 
     #[test]
     fn truck_decelerate_full() {
-        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 100.0, 0.0, 50.0, 6.0);
+        let mut truck = Truck::new(
+            0.0,
+            0.0,
+            "Test".to_string(),
+            100.0,
+            Heading::North,
+            50.0,
+            6.0,
+        );
         truck.decelerate(1); // Full truck deceleration for 1 second
         let expected_speed = 100.0 - Constants::DEC_RATE_FULL * 1.0;
         assert_eq!(truck.get_current_speed(), expected_speed);
@@ -174,7 +205,7 @@ mod truck_tests {
             0.0,
             "Test".to_string(),
             0.0,
-            0.0,
+            Heading::North,
             Constants::ACC_RATE_EMPTY * 2.0,
             4.0,
         );
@@ -189,7 +220,7 @@ mod truck_tests {
             0.0,
             "Test".to_string(),
             0.0,
-            0.0,
+            Heading::North,
             Constants::ACC_RATE_FULL * 2.0,
             6.0,
         );
@@ -199,7 +230,7 @@ mod truck_tests {
 
     #[test]
     fn set_speed_limit() {
-        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 60.0, 5.0);
+        let mut truck = Truck::new(0.0, 0.0, "Test".to_string(), 0.0, Heading::North, 60.0, 5.0);
         truck.set_speed_limit(70.0);
         assert_eq!(truck.desired_speed, 70.0);
     }

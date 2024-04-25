@@ -1,6 +1,6 @@
 use std::any::Any;
 
-use crate::{road_items::RoadItem, Constants};
+use crate::{road_items::RoadItem, Constants, Heading};
 
 use super::{DynamicRoadItem, Vehicle};
 
@@ -9,7 +9,7 @@ pub struct Car {
     y_location: f64,
     model: String,
     speed: f64,
-    _direction: f64,
+    _direction: Heading,
     desired_speed: f64,
 }
 
@@ -19,7 +19,7 @@ impl Car {
         y: f64,
         model: String,
         speed: f64,
-        direction: f64,
+        direction: Heading,
         desired_speed: f64,
     ) -> Self {
         Self {
@@ -54,7 +54,8 @@ impl RoadItem for Car {
 
 impl DynamicRoadItem for Car {
     fn update(&mut self, seconds: i32) {
-        self.update_speed(seconds)
+        self.update_speed(seconds);
+        self.y_location += self.speed;
     }
 
     fn as_any(&self) -> &dyn Any {
@@ -63,7 +64,14 @@ impl DynamicRoadItem for Car {
 }
 
 impl Vehicle for Car {
-    fn new(x: f64, y: f64, model: String, speed: f64, direction: f64, desired_speed: f64) -> Self
+    fn new(
+        x: f64,
+        y: f64,
+        model: String,
+        speed: f64,
+        direction: Heading,
+        desired_speed: f64,
+    ) -> Self
     where
         Self: Sized,
     {
@@ -117,7 +125,7 @@ mod tests {
 
     #[test]
     fn car_creation() {
-        let car = Car::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 60.0);
+        let car = Car::new(0.0, 0.0, "Test".to_string(), 0.0, Heading::North, 60.0);
         assert_eq!(car.model(), "Test");
         assert_eq!(car.get_current_speed(), 0.0);
         assert_eq!(car.get_x_location(), 0.0);
@@ -126,7 +134,7 @@ mod tests {
 
     #[test]
     fn car_accelerate() {
-        let mut car = Car::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 50.0);
+        let mut car = Car::new(0.0, 0.0, "Test".to_string(), 0.0, Heading::North, 50.0);
         // Simulate acceleration for 1 second
         car.accelerate(1);
         // Expected speed increase = ACC_RATE * time (in seconds)
@@ -136,7 +144,7 @@ mod tests {
 
     #[test]
     fn car_decelerate() {
-        let mut car = Car::new(0.0, 0.0, "Test".to_string(), 100.0, 0.0, 50.0);
+        let mut car = Car::new(0.0, 0.0, "Test".to_string(), 100.0, Heading::North, 50.0);
         // Simulate deceleration for 1 second
         car.decelerate(1);
         // Expected speed decrease = DEC_RATE * time (in seconds)
@@ -151,7 +159,7 @@ mod tests {
             0.0,
             "Test".to_string(),
             0.0,
-            0.0,
+            Heading::North,
             Constants::ACC_RATE * 2.0,
         );
         // Simulate updating speed for 2 seconds to reach desired speed
@@ -161,7 +169,7 @@ mod tests {
 
     #[test]
     fn set_speed_limit() {
-        let mut car = Car::new(0.0, 0.0, "Test".to_string(), 0.0, 0.0, 60.0);
+        let mut car = Car::new(0.0, 0.0, "Test".to_string(), 0.0, Heading::North, 60.0);
         car.set_speed_limit(70.0);
         assert_eq!(car.desired_speed, 70.0);
     }
