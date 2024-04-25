@@ -17,6 +17,7 @@ pub trait Drawable {
     fn draw_truck(&mut self, truck: &Truck);
     fn draw_traffic_light(&mut self, traffic_light: &TrafficLight);
     fn print(&self);
+    fn clear(&mut self);
 }
 
 pub struct CharMatrix {
@@ -85,11 +86,19 @@ impl Drawable for CharMatrix {
     }
 
     fn draw_car(&mut self, car: &Car) {
-        println!("Drawing car on CharMatrix {}", car.type_name());
+        let x = wc_point_to_cc_point(car.get_x_location());
+        let y = wc_point_to_cc_point(-car.get_y_location());
+        if x < Constants::CHAR_MAP_SIZE && y < Constants::CHAR_MAP_SIZE {
+            self.map[y][x] = 'C';
+        }
     }
 
     fn draw_truck(&mut self, truck: &Truck) {
-        println!("Drawing truck on CharMatrix {}", truck.type_name());
+        let x = wc_point_to_cc_point(truck.get_x_location());
+        let y = wc_point_to_cc_point(-truck.get_y_location());
+        if x < Constants::CHAR_MAP_SIZE && y < Constants::CHAR_MAP_SIZE {
+            self.map[y][x] = 'T';
+        }
     }
 
     fn draw_traffic_light(&mut self, traffic_light: &TrafficLight) {
@@ -108,6 +117,14 @@ impl Drawable for CharMatrix {
         for row in &self.map {
             let line: String = row.iter().collect();
             println!("{}", line);
+        }
+    }
+
+    fn clear(&mut self) {
+        for row in &mut self.map {
+            for cell in row {
+                *cell = ' ';
+            }
         }
     }
 }
@@ -148,8 +165,10 @@ impl IPrintDriver for ConsolePrint {
 
     fn print_dynamic_item(&self, item: &dyn DynamicRoadItem, o: &mut dyn Drawable) {
         if let Some(car) = item.as_any().downcast_ref::<Car>() {
+            println!("Printing Car");
             o.draw_car(car);
         } else if let Some(truck) = item.as_any().downcast_ref::<Truck>() {
+            println!("Printing Truck");
             o.draw_truck(truck);
         } else if let Some(traffic_light) = item.as_any().downcast_ref::<TrafficLight>() {
             o.draw_traffic_light(traffic_light);
