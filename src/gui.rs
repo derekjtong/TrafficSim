@@ -3,6 +3,7 @@ use std::rc::Rc;
 
 use crate::output::{ISimInput, ISimOutput};
 use crate::road::Road;
+use crate::road_items::dynamic_items::car::Car;
 use crate::road_items::dynamic_items::traffic_light::{LightColor, TrafficLight};
 use crate::road_items::dynamic_items::Vehicle;
 use crate::utils::Constants;
@@ -27,6 +28,15 @@ pub trait GUI: ISimOutput + ISimInput {
         green_duration: i32,
         initial_color: LightColor,
     ) -> Rc<RefCell<TrafficLight>>;
+    fn create_car(
+        &self,
+        x_location: f64,
+        y_location: f64,
+        model: String,
+        speed: f64,
+        direction: Heading,
+        desired_speed: f64,
+    ) -> Rc<RefCell<Car>>;
 }
 
 pub struct MetricGUI {}
@@ -91,6 +101,25 @@ impl GUI for MetricGUI {
             initial_color,
         )))
     }
+
+    fn create_car(
+        &self,
+        x_location: f64,
+        y_location: f64,
+        model: String,
+        speed: f64,
+        direction: Heading,
+        desired_speed: f64,
+    ) -> Rc<RefCell<Car>> {
+        Rc::new(RefCell::new(Car::new(
+            x_location * Constants::KM_TO_M,
+            y_location * Constants::KM_TO_M,
+            model,
+            speed,
+            direction,
+            desired_speed,
+        )))
+    }
 }
 
 pub struct ImperialGUI {}
@@ -153,6 +182,25 @@ impl GUI for ImperialGUI {
             yellow_duration,
             green_duration,
             initial_color,
+        )))
+    }
+
+    fn create_car(
+        &self,
+        x_location: f64,
+        y_location: f64,
+        model: String,
+        speed: f64,
+        direction: Heading,
+        desired_speed: f64,
+    ) -> Rc<RefCell<Car>> {
+        Rc::new(RefCell::new(Car::new(
+            x_location * Constants::MI_TO_M,
+            y_location * Constants::MI_TO_M,
+            model,
+            speed,
+            direction,
+            desired_speed,
         )))
     }
 }
