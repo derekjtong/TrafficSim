@@ -1,6 +1,6 @@
 use trafficsim::{
     road_items::dynamic_items::traffic_light::LightColor, CharMatrix, ConsolePrint, Drawable,
-    IPrintDriver, MetricGUI, Road, Simulation, Timer, GUI,
+    Heading, IPrintDriver, MetricGUI, Road, Simulation, Timer, GUI,
 };
 
 fn main() {
@@ -22,15 +22,26 @@ fn main() {
     map.add_road(uptown);
 
     // Create traffic light smart pointer (Rc) with mutable interior access (RefCell)
-    let traffic_light = sim_input.create_traffic_light(-0.005, 0.04, 3, 2, 3, LightColor::Red);
+    let traffic_light1 = sim_input.create_traffic_light(-0.005, 0.04, 3, 2, 3, LightColor::Red);
     let traffic_light2 = sim_input.create_traffic_light(-0.005, -0.03, 3, 2, 3, LightColor::Red);
 
     // Cloning smart pointer, not the RefCell traffic light instance
-    simulation.add_dynamic_item(traffic_light.clone());
-    map.add_dynamic_item(traffic_light.clone());
+    simulation.add_dynamic_item(traffic_light1.clone());
+    map.add_dynamic_item(traffic_light1.clone());
     simulation.add_dynamic_item(traffic_light2.clone());
     map.add_dynamic_item(traffic_light2.clone());
 
+    // Add car
+    let car1 = sim_input.create_car(
+        -0.015,
+        -0.09,
+        "car1".to_string(),
+        10.0,
+        Heading::North,
+        20.0,
+    );
+    simulation.add_dynamic_item(car1.clone());
+    map.add_dynamic_item(car1.clone());
     // Create the timer
     let mut timer = Timer::new(simulation, map, cp, cm);
     timer.start();
